@@ -35,7 +35,7 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
         {
             CurrentHighscore = _scoreCalculator.CalculateScore(currentHighscore.QuestionResult);
 
-            var allHighscores = _repository.GetAll<Highscore>();
+            var allHighscores = _repository.GetAllHighscores(currentHighscore.DictionaryId);
             var highscoresForDictionary = GetOrderedHighscoresForDictionary(allHighscores, currentHighscore.DictionaryId);
             Highscores = GetBestAllTimeHighscores(highscoresForDictionary);
             PersonalBest = GetPersonalBest(highscoresForDictionary, currentHighscore.Username);

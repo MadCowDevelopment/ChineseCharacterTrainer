@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace ChineseCharacterTrainer.Model
@@ -11,11 +10,7 @@ namespace ChineseCharacterTrainer.Model
         {
             Name = name;
             Entries = entries;
-            if (Entries != null) Entries.ForEach(p =>
-                                                     {
-                                                         p.Dictionary = this;
-                                                         p.DictionaryId = Id;
-                                                     });
+            if (Entries != null) Entries.ForEach(p => { p.DictionaryId = Id; });
             Highscores = new List<Highscore>();
         }
 
@@ -24,7 +19,6 @@ namespace ChineseCharacterTrainer.Model
         [DataMember]
         public string Name { get; private set; }
 
-        [DataMember]
         public virtual List<DictionaryEntry> Entries { get; set; }
 
         [DataMember]

@@ -83,7 +83,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
             _objectUnderTest.Content = null;
 
             _summaryVMMock.Raise(p => p.UploadFinished += null,
-                                 new Highscore("Frank", new Dictionary("Dict", null),
+                                 new Highscore("Frank", new Dictionary("Dict", null).Id,
                                                new QuestionResult(1, 0, TimeSpan.FromSeconds(1))));
 
             Assert.AreEqual(_objectUnderTest.Content, _highscoreVMMock.Object);

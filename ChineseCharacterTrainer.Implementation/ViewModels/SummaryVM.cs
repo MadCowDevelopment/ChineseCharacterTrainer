@@ -58,8 +58,8 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
                        new RelayCommand(
                            p =>
                                {
-                                   var highscore = new Highscore(Username, _dictionary, _questionResult);
-                                   _repository.Add(highscore);
+                                   var highscore = new Highscore(Username, _dictionary.Id, _questionResult);
+                                   _repository.AddHighscore(highscore);
                                    RaiseUploadFinished(highscore);
                                }, p => !string.IsNullOrWhiteSpace(Username)));
             }

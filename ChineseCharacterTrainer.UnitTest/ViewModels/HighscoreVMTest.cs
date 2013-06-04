@@ -36,7 +36,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
                 };
 
             _repositoryMock = new Mock<IRepository>();
-            _repositoryMock.Setup(p => p.GetAll<Highscore>()).Returns(highscores);
+            _repositoryMock.Setup(p => p.GetAllHighscores(_testDictionary.Id)).Returns(highscores);
 
             _objectUnderTest = new HighscoreVM(_repositoryMock.Object, new ScoreCalculator());
         }
@@ -88,7 +88,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
 
         private static Highscore CreateHighscore(string username, Dictionary dictionary, int seconds)
         {
-            return new Highscore(username, dictionary, new QuestionResult(1, 0, TimeSpan.FromSeconds(seconds)));
+            return new Highscore(username, dictionary.Id, new QuestionResult(1, 0, TimeSpan.FromSeconds(seconds)));
         }
     }
 }

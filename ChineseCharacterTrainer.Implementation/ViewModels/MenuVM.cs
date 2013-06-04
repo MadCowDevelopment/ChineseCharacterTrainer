@@ -106,7 +106,7 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
 
         public async Task Initialize()
         {
-            var dictionaries = await Task.Run(() =>_dictionaryRepository.GetAll<Dictionary>());
+            var dictionaries = await Task.Run(() =>_dictionaryRepository.GetAllDictionaries());
             AvailableDictionaries = new ObservableCollection<Dictionary>(dictionaries);
         }
 

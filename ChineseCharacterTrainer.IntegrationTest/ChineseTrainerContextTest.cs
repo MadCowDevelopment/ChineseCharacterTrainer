@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ChineseCharacterTrainer.Model;
 using ChineseCharacterTrainer.ServiceApp.Persistence;
 using NUnit.Framework;
@@ -22,28 +23,27 @@ namespace ChineseCharacterTrainer.IntegrationTest
             Guard<DictionaryEntry>(objectUnderTest);
             Guard<Translation>(objectUnderTest);
             Guard<Highscore>(objectUnderTest);
-            Guard<User>(objectUnderTest);
 
             var dictionary1 = CreateDictionary("1");
-            objectUnderTest.Add(typeof(Dictionary), dictionary1);
+            objectUnderTest.Add(dictionary1);
 
             var dictionary2 = CreateDictionary("2");
-            objectUnderTest.Add(typeof(Dictionary), dictionary2);
+            objectUnderTest.Add(dictionary2);
 
             var highscore = CreateHighscore(dictionary1);
-            objectUnderTest.Add(typeof(Highscore), highscore);
+            objectUnderTest.Add(highscore);
 
             objectUnderTest.SaveChanges();
         }
 
         private static Highscore CreateHighscore(Dictionary dictionary1)
         {
-            return new Highscore("Frank", dictionary1, new QuestionResult(1, 0, TimeSpan.FromSeconds(1)));
+            return new Highscore("Frank", dictionary1.Id, new QuestionResult(1, 0, TimeSpan.FromSeconds(1)));
         }
 
         private static void Guard<T>(ChineseTrainerContext objectUnderTest) where T : class
         {
-            Assert.AreEqual(0, objectUnderTest.GetAll(typeof(T)).Count,
+            Assert.AreEqual(0, objectUnderTest.GetAll<T>().Count(),
                             string.Format("Guard: Table for type {0} should be empty.", typeof(T)));
         }
 
@@ -63,7 +63,7 @@ namespace ChineseCharacterTrainer.IntegrationTest
         public void ShouldGetDictionariesFromDatabase()
         {
             var objectUnderTest = new ChineseTrainerContext(TestDatabaseName);
-            var dictionaries = objectUnderTest.GetAll(typeof(Dictionary));
+            var dictionaries = objectUnderTest.GetAll<Dictionary>().ToList();
 
             Assert.AreEqual(2, dictionaries.Count);
         }
@@ -72,7 +72,7 @@ namespace ChineseCharacterTrainer.IntegrationTest
         public void ShouldGetEntriesFromDatabase()
         {
             var objectUnderTest = new ChineseTrainerContext(TestDatabaseName);
-            var entries = objectUnderTest.GetAll(typeof(DictionaryEntry));
+            var entries = objectUnderTest.GetAll<DictionaryEntry>().ToList();
 
             Assert.AreEqual(4, entries.Count);
         }
@@ -81,7 +81,7 @@ namespace ChineseCharacterTrainer.IntegrationTest
         public void ShouldGetTranslationsFromDatabase()
         {
             var objectUnderTest = new ChineseTrainerContext(TestDatabaseName);
-            var translations = objectUnderTest.GetAll(typeof(Translation));
+            var translations = objectUnderTest.GetAll<Translation>().ToList();
 
             Assert.AreEqual(4, translations.Count);
         }
@@ -91,9 +91,10 @@ namespace ChineseCharacterTrainer.IntegrationTest
         {
             var objectUnderTest = new ChineseTrainerContext(TestDatabaseName);
 
-            var highscores = objectUnderTest.GetAll(typeof(Highscore));
+            var highscores = objectUnderTest.GetAll<Highscore>().ToList();
 
             Assert.AreEqual(1, highscores.Count);
         }
+
     }
 }

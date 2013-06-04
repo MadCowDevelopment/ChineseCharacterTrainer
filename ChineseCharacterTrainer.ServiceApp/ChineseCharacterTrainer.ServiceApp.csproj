@@ -83,7 +83,6 @@
     <Compile Include="Persistence\HighscoreMapping.cs" />
     <Compile Include="Persistence\IChineseTrainerContext.cs" />
     <Compile Include="Persistence\TranslationMapping.cs" />
-    <Compile Include="Persistence\UserMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

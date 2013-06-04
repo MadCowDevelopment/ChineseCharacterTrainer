@@ -27,27 +27,11 @@ namespace ChineseCharacterTrainer.Implementation.Services
                     var lines = _textFileReader.Read(fileName);
                     var entries = _wordlistParser.Import(lines);
                     var dictionary = new Dictionary(name, entries);
-                    AddDictionary(dictionary);
+                    _repository.AddDictionary(dictionary);
                     return dictionary;
                 });
 
             return result;
-        }
-
-        private void AddDictionary(Dictionary dictionary)
-        {
-            //// Note: This is a workaround to avoid exceeding the maximum message size in WCF.
-            var entries = dictionary.Entries;
-            dictionary.Entries = null;
-
-            _repository.Add(dictionary);
-
-            foreach (var dictionaryEntry in entries)
-            {
-                _repository.Add(dictionaryEntry);
-            }
-
-            dictionary.Entries = entries;
         }
     }
 }

@@ -1,29 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:11002/ChineseCharacterTrainerService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" />
-  <xs:element name="GetAll">
+  <xs:import schemaLocation="http://localhost:11002/ChineseCharacterTrainerService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:element name="GetDictionaries">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDictionariesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="typeName" nillable="true" type="xs:string" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="GetDictionariesResult" nillable="true" type="q1:ArrayOfDictionary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetAllResponse">
+  <xs:element name="GetDictionaryEntriesForDictionary">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="GetAllResult" nillable="true" type="q1:ArrayOfEntity" />
+        <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dictionaryId" type="q2:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="Add">
+  <xs:element name="GetDictionaryEntriesForDictionaryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="typeName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="entity" nillable="true" type="q2:Entity" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="GetDictionaryEntriesForDictionaryResult" nillable="true" type="q3:ArrayOfDictionaryEntry" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="AddResponse">
+  <xs:element name="GetHighscoresForDictionary">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dictionaryId" type="q4:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHighscoresForDictionaryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="GetHighscoresForDictionaryResult" nillable="true" type="q5:ArrayOfHighscore" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddDictionary">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="dictionary" nillable="true" type="q6:Dictionary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddDictionaryResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddDictionaryEntry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="dictionaryEntry" nillable="true" type="q7:DictionaryEntry" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddDictionaryEntryResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddHighscore">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="highscore" nillable="true" type="q8:Highscore" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddHighscoreResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

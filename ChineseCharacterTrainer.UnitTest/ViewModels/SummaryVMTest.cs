@@ -80,7 +80,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
 
             _objectUnderTest.UploadScoreCommand.Execute(null);
 
-            _repositoryMock.Verify(p=>p.Add(It.IsAny<Highscore>()));
+            _repositoryMock.Verify(p=>p.AddHighscore(It.IsAny<Highscore>()));
         }
 
         [Test]

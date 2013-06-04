@@ -32,8 +32,5 @@ namespace ChineseCharacterTrainer.Model
 
         [DataMember]
         public Guid DictionaryId { get; internal set; }
-
-        [DataMember]
-        public virtual Dictionary Dictionary { get; internal set; }
     }
 }

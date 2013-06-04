@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ChineseCharacterTrainer.Implementation.ServiceReference;
 using ChineseCharacterTrainer.Model;
 using System.Collections.Generic;
@@ -14,15 +15,46 @@ namespace ChineseCharacterTrainer.Implementation.Services
             _chineseCharacterTrainerService = chineseCharacterTrainerService;
         }
 
-        public List<T> GetAll<T>() where T : Entity
+        //public List<T> GetAll<T>() where T : Entity
+        //{
+        //    var result = _chineseCharacterTrainerService.GetAll(typeof (T).AssemblyQualifiedName);
+        //    return result.Select(p => p as T).ToList();
+        //}
+
+        //public void Add<T>(T entity) where T : Entity
+        //{
+        //    _chineseCharacterTrainerService.Add(typeof(T).AssemblyQualifiedName, entity);
+        //}
+
+        public void AddDictionary(Dictionary dictionary)
         {
-            var result = _chineseCharacterTrainerService.GetAll(typeof (T).AssemblyQualifiedName);
-            return result.Select(p => p as T).ToList();
+            _chineseCharacterTrainerService.AddDictionary(dictionary);
+            foreach (var entry in dictionary.Entries)
+            {
+                _chineseCharacterTrainerService.AddDictionaryEntry(entry);
+            }
         }
 
-        public void Add<T>(T entity) where T : Entity
+        public void AddHighscore(Highscore highscore)
         {
-            _chineseCharacterTrainerService.Add(typeof(T).AssemblyQualifiedName, entity);
+            _chineseCharacterTrainerService.AddHighscore(highscore);
+        }
+
+        public List<Dictionary> GetAllDictionaries()
+        {
+            var dictionaries = _chineseCharacterTrainerService.GetDictionaries();
+            foreach (var dictionary in dictionaries)
+            {
+                dictionary.Entries = _chineseCharacterTrainerService.GetDictionaryEntriesForDictionary(dictionary.Id);
+            }
+
+            return dictionaries;
+        }
+
+        public List<Highscore> GetAllHighscores(Guid dictionaryId)
+        {
+            var highscores = _chineseCharacterTrainerService.GetHighscoresForDictionary(dictionaryId);
+            return highscores;
         }
     }
 }

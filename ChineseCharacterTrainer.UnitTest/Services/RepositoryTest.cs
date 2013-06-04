@@ -13,7 +13,16 @@ namespace ChineseCharacterTrainer.UnitTest.Services
         private IRepository _objectUnderTest;
         private Mock<IChineseCharacterTrainerService> _serviceMock;
 
-        private Dictionary _dictionary = new Dictionary("MyDict", null);
+        private readonly Dictionary _dictionary =
+            new Dictionary("MyDict",
+                           new List<DictionaryEntry>
+                               {
+                                   new DictionaryEntry("你", "ni3",
+                                                       new List<Translation>
+                                                           {
+                                                               new Translation("you")
+                                                           })
+                               });
 
         [SetUp]
         public void Initialize()
@@ -26,21 +35,21 @@ namespace ChineseCharacterTrainer.UnitTest.Services
         [Test]
         public void ShouldAddItemToServiceWhenAddingDictionary()
         {
-            _objectUnderTest.Add(_dictionary);
+            _objectUnderTest.AddDictionary(_dictionary);
 
-            _serviceMock.Verify(p => p.Add(typeof(Dictionary).AssemblyQualifiedName, _dictionary));
+            _serviceMock.Verify(p => p.AddDictionary(_dictionary));
         }
 
         [Test]
         public void ShouldGetDictionary()
         {
-            _serviceMock.Setup(p => p.GetAll(typeof(Dictionary).AssemblyQualifiedName)).Returns(new List<Entity>
+            _serviceMock.Setup(p => p.GetDictionaries()).Returns(new List<Dictionary>
                 {
                     new Dictionary("1", null),
                     new Dictionary("2", null)
                 });
 
-            var dictionaries = _objectUnderTest.GetAll<Dictionary>();
+            var dictionaries = _objectUnderTest.GetAllDictionaries();
 
             Assert.AreEqual(2, dictionaries.Count);
         }
@@ -50,28 +59,28 @@ namespace ChineseCharacterTrainer.UnitTest.Services
         {
             var highscore = CreateTestHighscore();
 
-            _objectUnderTest.Add(highscore);
+            _objectUnderTest.AddHighscore(highscore);
 
-            _serviceMock.Verify(p => p.Add(typeof(Highscore).AssemblyQualifiedName, highscore));
+            _serviceMock.Verify(p => p.AddHighscore(highscore));
         }
 
         [Test]
         public void ShouldGetHighscore()
         {
-            _serviceMock.Setup(p => p.GetAll(typeof(Highscore).AssemblyQualifiedName)).Returns(new List<Entity>
+            _serviceMock.Setup(p => p.GetHighscoresForDictionary(_dictionary.Id)).Returns(new List<Highscore>
                 {
                     CreateTestHighscore(),
                     CreateTestHighscore()
                 });
 
-            var highscores = _objectUnderTest.GetAll<Highscore>();
+            var highscores = _objectUnderTest.GetAllHighscores(_dictionary.Id);
 
             Assert.AreEqual(2, highscores.Count);
         }
 
         private Highscore CreateTestHighscore()
         {
-            return new Highscore("Frank", _dictionary, new QuestionResult(0, 0, TimeSpan.FromSeconds(1)));
+            return new Highscore("Frank", _dictionary.Id, new QuestionResult(0, 0, TimeSpan.FromSeconds(1)));
         }
     }
 }
