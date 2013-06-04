@@ -47,6 +47,10 @@ namespace ChineseCharacterTrainer.ServiceApp.Persistence
             foreach (var navigationPropertyInfo in navigationPropertyInfos)
             {
                 var navigationProperty = navigationPropertyInfo.GetValue(entity) as Entity;
+                if (navigationProperty == null)
+                {
+                    continue;
+                }
 
                 var set = Set(navigationPropertyInfo.PropertyType);
                 set.Load();

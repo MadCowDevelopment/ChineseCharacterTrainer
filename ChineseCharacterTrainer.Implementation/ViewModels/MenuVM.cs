@@ -90,8 +90,6 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             }
         }
 
-        public event Action<Dictionary> OpenDictionaryRequested;
-
         public string Name
         {
             get { return _name; }
@@ -104,13 +102,15 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             set { _fileName = value; RaisePropertyChanged(() => FileName); }
         }
 
+        public event Action<Dictionary> OpenDictionaryRequested;
+
         public async Task Initialize()
         {
             var dictionaries = await Task.Run(() =>_dictionaryRepository.GetAll<Dictionary>());
             AvailableDictionaries = new ObservableCollection<Dictionary>(dictionaries);
         }
 
-        protected virtual void RaiseOpenDictionaryRequested(Dictionary dictionary)
+        private void RaiseOpenDictionaryRequested(Dictionary dictionary)
         {
             var handler = OpenDictionaryRequested;
             if (handler != null) handler(dictionary);

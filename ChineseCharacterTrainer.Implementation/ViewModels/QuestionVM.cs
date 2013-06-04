@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using ChineseCharacterTrainer.Implementation.Model;
 using ChineseCharacterTrainer.Implementation.Services;
 using ChineseCharacterTrainer.Implementation.Utilities;
 using ChineseCharacterTrainer.Library;
@@ -13,7 +12,6 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
     {
         private readonly IDateTime _dateTime;
         private readonly IDictionaryEntryPicker _dictionaryEntryPicker;
-        private readonly IScoreCalculator _scoreCalculator;
         private ICommand _answerCommand;
         private DictionaryEntry _currentEntry;
         private string _answer;
@@ -25,13 +23,13 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
 
         public QuestionVM(
             IDateTime dateTime, 
-            IDictionaryEntryPicker dictionaryEntryPicker,
-            IScoreCalculator scoreCalculator)
+            IDictionaryEntryPicker dictionaryEntryPicker)
         {
             _dateTime = dateTime;
             _dictionaryEntryPicker = dictionaryEntryPicker;
-            _scoreCalculator = scoreCalculator;
         }
+
+        public event Action<QuestionResult> QuestionsFinished;
 
         public void Initialize(List<DictionaryEntry> dictionaryEntries)
         {
@@ -44,17 +42,9 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             _startTime = _dateTime.Now;
         }
 
-        public event Action<QuestionResult> QuestionsFinished;
-
-        private void RaiseQuestionsFinished(QuestionResult result)
-        {
-            var handler = QuestionsFinished;
-            if (handler != null) handler(result);
-        }
-
         public ICommand AnswerCommand
         {
-            get { return _answerCommand ?? (_answerCommand = new RelayCommand(p => AnswerCurrentEntry())); }
+            get { return _answerCommand ?? (_answerCommand = new RelayCommand(p => ProcessCurrentEntry())); }
         }
 
         public bool IsInAnswerMode
@@ -93,7 +83,13 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             private set { _currentEntry = value; RaisePropertyChanged(() => CurrentEntry);}
         }
 
-        private void AnswerCurrentEntry()
+        private void RaiseQuestionsFinished(QuestionResult result)
+        {
+            var handler = QuestionsFinished;
+            if (handler != null) handler(result);
+        }
+
+        private void ProcessCurrentEntry()
         {
             if (CurrentEntry == null)
             {
@@ -102,35 +98,43 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
 
             if (IsInAnswerMode)
             {
-                LastAnswerWasCorrect = RemoveWhitespaces(Answer) == RemoveWhitespaces(CurrentEntry.Pinyin);
-                
-                if (LastAnswerWasCorrect) NumberOfCorrectAnswers++;
-                else
-                {
-                    _dictionaryEntryPicker.QueueEntry(CurrentEntry);
-                    NumberOfIncorrectAnswers++;
-                }
+                AnswerCurrentEntry();
             }
             else
             {
-                GetNextEntry();
-                if (CurrentEntry == null)
-                {
-                    var duration = _dateTime.Now - _startTime;
-                    var score = _scoreCalculator.CalculateScore(duration, NumberOfIncorrectAnswers);
-                    RaiseQuestionsFinished(
-                        new QuestionResult(
-                            NumberOfCorrectAnswers,
-                            NumberOfIncorrectAnswers,
-                            duration,
-                            score));
-                    return;
-                }
-
-                Answer = string.Empty;
+                MoveToNextEntry();
             }
             
             IsInAnswerMode = !IsInAnswerMode;
+        }
+
+        private void MoveToNextEntry()
+        {
+            GetNextEntry();
+            if (CurrentEntry == null)
+            {
+                var duration = _dateTime.Now - _startTime;
+                RaiseQuestionsFinished(
+                    new QuestionResult(
+                        NumberOfCorrectAnswers,
+                        NumberOfIncorrectAnswers,
+                        duration));
+                return;
+            }
+
+            Answer = string.Empty;
+        }
+
+        private void AnswerCurrentEntry()
+        {
+            LastAnswerWasCorrect = RemoveWhitespaces(Answer) == RemoveWhitespaces(CurrentEntry.Pinyin);
+
+            if (LastAnswerWasCorrect) NumberOfCorrectAnswers++;
+            else
+            {
+                _dictionaryEntryPicker.QueueEntry(CurrentEntry);
+                NumberOfIncorrectAnswers++;
+            }
         }
 
         private string RemoveWhitespaces(string value)

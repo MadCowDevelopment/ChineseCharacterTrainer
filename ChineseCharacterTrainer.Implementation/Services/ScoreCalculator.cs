@@ -1,12 +1,13 @@
 using System;
+using ChineseCharacterTrainer.Model;
 
 namespace ChineseCharacterTrainer.Implementation.Services
 {
     public class ScoreCalculator : IScoreCalculator
     {
-        public int CalculateScore(TimeSpan duration, int numberOfIncorrectAnswers)
+        public int CalculateScore(QuestionResult questionResult)
         {
-            return (int)duration.TotalSeconds + numberOfIncorrectAnswers * 5;
+            return (int)questionResult.Duration.TotalSeconds + questionResult.NumberOfIncorrectAnswers * 5;
         }
     }
 }

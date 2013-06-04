@@ -3,6 +3,7 @@ using ChineseCharacterTrainer.Implementation.ViewModels;
 using ChineseCharacterTrainer.Model;
 using Moq;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace ChineseCharacterTrainer.UnitTest.ViewModels
@@ -17,10 +18,6 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
 
         private Highscore _currentHighscore;
 
-        private readonly User _userFrank = new User("Frank");
-        private readonly User _userSandra = new User("Sandra");
-        private readonly User _userMyself = new User("Myself");
-        
         [SetUp]
         public void Initialize()
         {
@@ -28,20 +25,20 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
 
             var highscores = new List<Highscore>
                 {
-                    CreateHighscore(_userFrank, _testDictionary, 80),
-                    CreateHighscore(_userMyself, _testDictionary, 50),
-                    CreateHighscore(_userSandra, _testDictionary, 40),
-                    CreateHighscore(_userSandra, _testDictionary, 70),
-                    CreateHighscore(_userMyself, new Dictionary("dict2", null), 20),
+                    CreateHighscore("Frank", _testDictionary, 80),
+                    CreateHighscore("Myself", _testDictionary, 50),
+                    CreateHighscore("Sandra", _testDictionary, 40),
+                    CreateHighscore("Sandra", _testDictionary, 70),
+                    CreateHighscore("Myself", new Dictionary("dict2", null), 20),
                     _currentHighscore,
-                    CreateHighscore(_userFrank, _testDictionary, 30),
-                    CreateHighscore(_userFrank, _testDictionary, 60)
+                    CreateHighscore("Frank", _testDictionary, 30),
+                    CreateHighscore("Frank", _testDictionary, 60)
                 };
 
             _repositoryMock = new Mock<IRepository>();
             _repositoryMock.Setup(p => p.GetAll<Highscore>()).Returns(highscores);
 
-            _objectUnderTest = new HighscoreVM(_repositoryMock.Object);
+            _objectUnderTest = new HighscoreVM(_repositoryMock.Object, new ScoreCalculator());
         }
 
         [Test]
@@ -60,7 +57,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         {
             _objectUnderTest.Initialize(_currentHighscore);
 
-            Assert.AreEqual(_currentHighscore, _objectUnderTest.CurrentHighscore);
+            Assert.AreEqual(10, _objectUnderTest.CurrentHighscore);
         }
 
         [Test]
@@ -81,17 +78,17 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         {
             _objectUnderTest.Initialize(_currentHighscore);
 
-            Assert.AreEqual(_currentHighscore, _objectUnderTest.BestHighscore);
+            Assert.AreEqual(10, _objectUnderTest.PersonalBest);
         }
 
         private Highscore CreateCurrentHighscore()
         {
-            return CreateHighscore(_userMyself, _testDictionary, 10);
+            return CreateHighscore("Myself", _testDictionary, 10);
         }
 
-        private static Highscore CreateHighscore(User user, Dictionary dictionary, int score)
+        private static Highscore CreateHighscore(string username, Dictionary dictionary, int seconds)
         {
-            return new Highscore(user, dictionary, score);
+            return new Highscore(username, dictionary, new QuestionResult(1, 0, TimeSpan.FromSeconds(seconds)));
         }
     }
 }

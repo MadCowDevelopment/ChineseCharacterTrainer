@@ -66,6 +66,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Converters\BooleanConverterTest.cs" />
     <Compile Include="Converters\BooleanToBrushConverterTest.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverterTest.cs" />

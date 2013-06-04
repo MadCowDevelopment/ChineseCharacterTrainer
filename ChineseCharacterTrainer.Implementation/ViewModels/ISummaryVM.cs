@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using ChineseCharacterTrainer.Implementation.Model;
 using ChineseCharacterTrainer.Library;
 using System;
 using ChineseCharacterTrainer.Model;

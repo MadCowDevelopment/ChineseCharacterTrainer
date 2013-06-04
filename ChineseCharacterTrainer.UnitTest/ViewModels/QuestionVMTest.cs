@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChineseCharacterTrainer.Implementation.Model;
 using ChineseCharacterTrainer.Implementation.Services;
 using ChineseCharacterTrainer.Implementation.Utilities;
 using ChineseCharacterTrainer.Implementation.ViewModels;
@@ -16,7 +15,6 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
 
         private Mock<IDateTime> _dateTimeMock;
         private Mock<IDictionaryEntryPicker> _dictionaryEntryPickerMock;
-        private Mock<IScoreCalculator> _scoreCalculatorMock;
 
         private readonly DateTime _startTime = new DateTime(2010, 1, 1);
         private readonly DateTime _endTime = new DateTime(2010, 1, 2);
@@ -38,11 +36,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
             _dictionaryEntryPickerMock.Setup(p => p.GetNextEntry()).Returns(
                 () => entryQueue.Count > 0 ? entryQueue.Dequeue() : null);
 
-            _scoreCalculatorMock = new Mock<IScoreCalculator>();
-            _scoreCalculatorMock.Setup(p => p.CalculateScore(It.IsAny<TimeSpan>(), It.IsAny<int>())).Returns(10);
-
-            _objectUnderTest = new QuestionVM(_dateTimeMock.Object, _dictionaryEntryPickerMock.Object,
-                                              _scoreCalculatorMock.Object);
+            _objectUnderTest = new QuestionVM(_dateTimeMock.Object, _dictionaryEntryPickerMock.Object);
 
             _objectUnderTest.Initialize(_dictionaryEntries);
         }

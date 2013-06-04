@@ -54,11 +54,11 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" FontSize="24" Text="Current score: " HorizontalAlignment="Right"/>
-            <TextBlock Grid.Column="1" Grid.Row="0" FontSize="24" Text="{Binding CurrentHighscore.Score}"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" FontSize="24" Margin="10,0,0,0" Text="Current score: " HorizontalAlignment="Right"/>
+            <TextBlock Grid.Column="1" Grid.Row="0" FontSize="24" Text="{Binding CurrentHighscore}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="1" FontSize="24" Text="Personal best: " HorizontalAlignment="Right"/>
-            <TextBlock Grid.Column="1" Grid.Row="1" FontSize="24" Text="{Binding BestHighscore.Score}"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" FontSize="24" Margin="10,0,0,0" Text="Personal best: " HorizontalAlignment="Right"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" FontSize="24" Text="{Binding PersonalBest}"/>
         </Grid>
         
         <Button Grid.Row="4" Margin="10" Content="Back to menu" Command="{Binding ContinueCommand}"/>

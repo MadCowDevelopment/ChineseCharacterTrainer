@@ -1,4 +1,5 @@
 ﻿using ChineseCharacterTrainer.Implementation.Services;
+using ChineseCharacterTrainer.Model;
 using NUnit.Framework;
 using System;
 
@@ -19,7 +20,9 @@ namespace ChineseCharacterTrainer.UnitTest.Services
         [TestCase(100, 0, 100)]
         public void ShouldReturnCorrectScore(double seconds, int numberOfIncorrectAnswers, int expectedScore)
         {
-            var score = _objectUnderTest.CalculateScore(TimeSpan.FromSeconds(seconds), numberOfIncorrectAnswers);
+            var score =
+                _objectUnderTest.CalculateScore(
+                    new QuestionResult(0, numberOfIncorrectAnswers, TimeSpan.FromSeconds(seconds)));
 
             Assert.AreEqual(expectedScore, score);
         }

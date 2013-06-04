@@ -6,30 +6,25 @@ namespace ChineseCharacterTrainer.Model
     [DataContract(IsReference = true)]
     public class Highscore : Entity
     {
-        public Highscore(User user, Dictionary dictionary, int score)
+        public Highscore(string username, Dictionary dictionary, QuestionResult questionResult)
         {
-            User = user;
-            UserId = user.Id;
+            Username = username;
             Dictionary = dictionary;
+            QuestionResult = questionResult;
             DictionaryId = dictionary.Id;
-            Score = score;
         }
 
         protected Highscore() { }
 
         [DataMember]
-        public Guid UserId { get; private set; }
-
-        [DataMember]
-        public virtual User User { get; private set; }
+        public string Username { get; private set; }
 
         [DataMember]
         public Guid DictionaryId { get; private set; }
 
-        [DataMember]
         public virtual Dictionary Dictionary { get; private set; }
 
         [DataMember]
-        public int Score { get; private set; }
+        public virtual QuestionResult QuestionResult { get; private set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ChineseCharacterTrainer.Model;
+﻿using System;
+using ChineseCharacterTrainer.Model;
 using ChineseCharacterTrainer.ServiceApp.Persistence;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace ChineseCharacterTrainer.IntegrationTest
 
         private static Highscore CreateHighscore(Dictionary dictionary1)
         {
-            return new Highscore(new User("Frank"), dictionary1, 10);
+            return new Highscore("Frank", dictionary1, new QuestionResult(1, 0, TimeSpan.FromSeconds(1)));
         }
 
         private static void Guard<T>(ChineseTrainerContext objectUnderTest) where T : class
@@ -93,16 +94,6 @@ namespace ChineseCharacterTrainer.IntegrationTest
             var highscores = objectUnderTest.GetAll(typeof(Highscore));
 
             Assert.AreEqual(1, highscores.Count);
-        }
-
-        [Test]
-        public void ShouldGetUserFromDatabase()
-        {
-            var objectUnderTest = new ChineseTrainerContext(TestDatabaseName);
-
-            var users = objectUnderTest.GetAll(typeof (User));
-
-            Assert.AreEqual(1, users.Count);
         }
     }
 }

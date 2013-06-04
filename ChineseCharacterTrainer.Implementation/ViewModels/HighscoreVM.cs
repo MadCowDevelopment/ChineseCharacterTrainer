@@ -9,20 +9,16 @@ using ChineseCharacterTrainer.Model;
 
 namespace ChineseCharacterTrainer.Implementation.ViewModels
 {
-    public class HighscoreVM : ViewModel, IHighscoreVM
+    public sealed class HighscoreVM : ViewModel, IHighscoreVM
     {
         private readonly IRepository _repository;
+        private readonly IScoreCalculator _scoreCalculator;
         private ICommand _continueCommand;
 
-        public List<dynamic> Highscores { get; private set; }
-
-        public Highscore CurrentHighscore { get; private set; }
-
-        public Highscore BestHighscore { get; private set; }
-
-        public HighscoreVM(IRepository repository)
+        public HighscoreVM(IRepository repository, IScoreCalculator scoreCalculator)
         {
             _repository = repository;
+            _scoreCalculator = scoreCalculator;
         }
 
         public ICommand ContinueCommand
@@ -30,51 +26,55 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             get { return _continueCommand ?? (_continueCommand = new RelayCommand(p => RaiseReturnToMenuRequested())); }
         }
 
+        public List<dynamic> Highscores { get; private set; }
+        public int CurrentHighscore { get; private set; }
+        public int PersonalBest { get; private set; }
+        public event Action ReturnToMenuRequested;
+
         public void Initialize(Highscore currentHighscore)
         {
-            CurrentHighscore = currentHighscore;
+            CurrentHighscore = _scoreCalculator.CalculateScore(currentHighscore.QuestionResult);
 
             var allHighscores = _repository.GetAll<Highscore>();
-            var highscoresForDictionary = GetOrderedHighscoresForDictionary(allHighscores);
+            var highscoresForDictionary = GetOrderedHighscoresForDictionary(allHighscores, currentHighscore.DictionaryId);
             Highscores = GetBestAllTimeHighscores(highscoresForDictionary);
-            BestHighscore = GetBestUserHighscores(highscoresForDictionary);
+            PersonalBest = GetPersonalBest(highscoresForDictionary, currentHighscore.Username);
         }
 
-        private Highscore GetBestUserHighscores(IEnumerable<Highscore> highscores)
+        private void RaiseReturnToMenuRequested()
         {
-            // Note: Currently the user's name is used to identify the user. This is because every time a new user
-            //       is created before the highscore is uploaded. To avoid this a user should have a login and
-            //       always the same ID.
-            return highscores.First(p => p.User.Name == CurrentHighscore.User.Name);
+            var handler = ReturnToMenuRequested;
+            if (handler != null) handler();
         }
 
-        private List<Highscore> GetOrderedHighscoresForDictionary(IEnumerable<Highscore> allHighscores)
+        private int GetPersonalBest(IEnumerable<Highscore> highscores, string username)
+        {
+            var personalBest = highscores.First(p => p.Username == username);
+            return _scoreCalculator.CalculateScore(personalBest.QuestionResult);
+        }
+
+        private List<Highscore> GetOrderedHighscoresForDictionary(IEnumerable<Highscore> allHighscores, Guid dictionaryId)
         {
             return allHighscores
-                .Where(p => p.DictionaryId == CurrentHighscore.DictionaryId)
-                .OrderBy(p => p.Score).ToList();
+                .Where(p => p.DictionaryId == dictionaryId)
+                .OrderBy(p => _scoreCalculator.CalculateScore(p.QuestionResult)).ToList();
         }
 
         private List<dynamic> GetBestAllTimeHighscores(IEnumerable<Highscore> highscores)
         {
             var i = 1;
             return highscores.Take(5).Select(
-                p =>
-                    {
-                        dynamic expandoObject = new ExpandoObject();
-                        expandoObject.Ranking = i++;
-                        expandoObject.Username = p.User.Name;
-                        expandoObject.Score = p.Score;
-                        return expandoObject;
-                    }).ToList();
+                p => CreateDynamicScoreObject(i++, p.Username, _scoreCalculator.CalculateScore(p.QuestionResult)))
+                             .ToList();
         }
 
-        public event Action ReturnToMenuRequested;
-
-        protected virtual void RaiseReturnToMenuRequested()
+        private static dynamic CreateDynamicScoreObject(int rank, string username, int score)
         {
-            var handler = ReturnToMenuRequested;
-            if (handler != null) handler();
+            dynamic expandoObject = new ExpandoObject();
+            expandoObject.Ranking = rank;
+            expandoObject.Username = username;
+            expandoObject.Score = score;
+            return expandoObject;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using ChineseCharacterTrainer.Implementation.Model;
 using ChineseCharacterTrainer.Implementation.ViewModels;
 using ChineseCharacterTrainer.Model;
 using Moq;
@@ -41,7 +40,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         public void ShouldSetContentToSummaryViewModelWhenQuestionsAreFinished()
         {
             _questionVMMock.Raise(p => p.QuestionsFinished += null,
-                                  new QuestionResult(1, 2, TimeSpan.FromSeconds(1), 100));
+                                  new QuestionResult(1, 2, TimeSpan.FromSeconds(1)));
 
             Assert.AreEqual(_summaryVMMock.Object, _objectUnderTest.Content);
         }
@@ -50,7 +49,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         public void ShouldInitializeSummaryViewModelWhenQuestionsAreFinished()
         {
             _menuVMMock.Setup(p => p.SelectedDictionary).Returns(new Dictionary("Test", null));
-            var questionResult = new QuestionResult(1, 2, TimeSpan.FromSeconds(1), 100);
+            var questionResult = new QuestionResult(1, 2, TimeSpan.FromSeconds(1));
 
             _questionVMMock.Raise(p => p.QuestionsFinished += null, questionResult);
 
@@ -84,7 +83,8 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
             _objectUnderTest.Content = null;
 
             _summaryVMMock.Raise(p => p.UploadFinished += null,
-                                 new Highscore(new User("Frank"), new Dictionary("Dict", null), 0));
+                                 new Highscore("Frank", new Dictionary("Dict", null),
+                                               new QuestionResult(1, 0, TimeSpan.FromSeconds(1))));
 
             Assert.AreEqual(_objectUnderTest.Content, _highscoreVMMock.Object);
         }

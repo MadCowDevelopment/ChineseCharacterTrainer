@@ -1,4 +1,5 @@
-﻿using ChineseCharacterTrainer.Implementation.ServiceReference;
+﻿using System;
+using ChineseCharacterTrainer.Implementation.ServiceReference;
 using ChineseCharacterTrainer.Implementation.Services;
 using ChineseCharacterTrainer.Model;
 using Moq;
@@ -12,7 +13,6 @@ namespace ChineseCharacterTrainer.UnitTest.Services
         private IRepository _objectUnderTest;
         private Mock<IChineseCharacterTrainerService> _serviceMock;
 
-        private User _user = new User("Frank");
         private Dictionary _dictionary = new Dictionary("MyDict", null);
 
         [SetUp]
@@ -48,7 +48,7 @@ namespace ChineseCharacterTrainer.UnitTest.Services
         [Test]
         public void ShouldAddHighscoreToServiceWhenAddingHighscore()
         {
-            var highscore = new Highscore(_user, _dictionary, 0);
+            var highscore = CreateTestHighscore();
 
             _objectUnderTest.Add(highscore);
 
@@ -60,13 +60,18 @@ namespace ChineseCharacterTrainer.UnitTest.Services
         {
             _serviceMock.Setup(p => p.GetAll(typeof(Highscore).AssemblyQualifiedName)).Returns(new List<Entity>
                 {
-                    new Highscore(_user, _dictionary, 0),
-                    new Highscore(_user, _dictionary, 0)
+                    CreateTestHighscore(),
+                    CreateTestHighscore()
                 });
 
             var highscores = _objectUnderTest.GetAll<Highscore>();
 
             Assert.AreEqual(2, highscores.Count);
+        }
+
+        private Highscore CreateTestHighscore()
+        {
+            return new Highscore("Frank", _dictionary, new QuestionResult(0, 0, TimeSpan.FromSeconds(1)));
         }
     }
 }

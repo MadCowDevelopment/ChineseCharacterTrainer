@@ -1,5 +1,4 @@
-﻿using ChineseCharacterTrainer.Implementation.Model;
-using ChineseCharacterTrainer.Implementation.Services;
+﻿using ChineseCharacterTrainer.Implementation.Services;
 using ChineseCharacterTrainer.Implementation.ViewModels;
 using ChineseCharacterTrainer.Model;
 using Moq;
@@ -12,17 +11,19 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
     {
         private ISummaryVM _objectUnderTest;
 
-        private readonly QuestionResult _questionResult = new QuestionResult(1, 2, TimeSpan.FromSeconds(1), 100);
+        private readonly QuestionResult _questionResult = new QuestionResult(1, 2, TimeSpan.FromSeconds(1));
         private readonly Dictionary _dictionary = new Dictionary("Test", null);
 
         private Mock<IRepository> _repositoryMock;
+        private Mock<IScoreCalculator> _scoreCalculatorMock;
 
         [SetUp]
         public void Initialize()
         {
             _repositoryMock = new Mock<IRepository>();
+            _scoreCalculatorMock = new Mock<IScoreCalculator>();
 
-            _objectUnderTest = new SummaryVM(_repositoryMock.Object);
+            _objectUnderTest = new SummaryVM(_repositoryMock.Object, _scoreCalculatorMock.Object);
             _objectUnderTest.Initialize(_dictionary, _questionResult);
         }
 
@@ -47,6 +48,8 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         [Test]
         public void ShouldGetCorrectScoreAfterInitializing()
         {
+            _scoreCalculatorMock.Setup(p => p.CalculateScore(_questionResult)).Returns(100);
+
             Assert.AreEqual(100, _objectUnderTest.Score);
         }
 

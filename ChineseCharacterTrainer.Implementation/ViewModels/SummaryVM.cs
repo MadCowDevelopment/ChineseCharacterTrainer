@@ -1,5 +1,4 @@
-﻿using ChineseCharacterTrainer.Implementation.Model;
-using ChineseCharacterTrainer.Implementation.ServiceReference;
+﻿using ChineseCharacterTrainer.Implementation.ServiceReference;
 using ChineseCharacterTrainer.Implementation.Services;
 using ChineseCharacterTrainer.Library;
 using System;
@@ -11,15 +10,17 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
     public class SummaryVM : ViewModel, ISummaryVM
     {
         private readonly IRepository _repository;
+        private readonly IScoreCalculator _scoreCalculator;
         private string _username;
         private ICommand _uploadScoreCommand;
 
         private QuestionResult _questionResult;
         private Dictionary _dictionary;
 
-        public SummaryVM(IRepository repository)
+        public SummaryVM(IRepository repository, IScoreCalculator scoreCalculator)
         {
             _repository = repository;
+            _scoreCalculator = scoreCalculator;
         }
 
         public int NumberOfCorrectAnswers
@@ -39,7 +40,7 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
 
         public int Score
         {
-            get { return _questionResult.Score; }
+            get { return _scoreCalculator.CalculateScore(_questionResult); }
         }
 
         public string Username
@@ -57,9 +58,7 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
                        new RelayCommand(
                            p =>
                                {
-                                   var user = new User(Username);
-                                   var highscore = new Highscore(user, _dictionary, Score);
-
+                                   var highscore = new Highscore(Username, _dictionary, _questionResult);
                                    _repository.Add(highscore);
                                    RaiseUploadFinished(highscore);
                                }, p => !string.IsNullOrWhiteSpace(Username)));

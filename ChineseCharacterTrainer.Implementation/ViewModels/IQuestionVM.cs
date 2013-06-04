@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using ChineseCharacterTrainer.Implementation.Model;
 using ChineseCharacterTrainer.Library;
 using ChineseCharacterTrainer.Model;
 

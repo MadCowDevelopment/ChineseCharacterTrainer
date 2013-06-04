@@ -9,8 +9,8 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
     public interface IHighscoreVM : IViewModel
     {
         List<dynamic> Highscores { get; }
-        Highscore CurrentHighscore { get; }
-        Highscore BestHighscore { get; }
+        int CurrentHighscore { get; }
+        int PersonalBest { get; }
 
         ICommand ContinueCommand { get; }
 

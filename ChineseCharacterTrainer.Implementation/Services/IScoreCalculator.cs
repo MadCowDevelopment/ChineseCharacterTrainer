@@ -1,9 +1,9 @@
-using System;
+using ChineseCharacterTrainer.Model;
 
 namespace ChineseCharacterTrainer.Implementation.Services
 {
     public interface IScoreCalculator
     {
-        int CalculateScore(TimeSpan duration, int numberOfIncorrectAnswers);
+        int CalculateScore(QuestionResult questionResult);
     }
 }

@@ -1,5 +1,4 @@
-﻿using ChineseCharacterTrainer.Implementation.Model;
-using ChineseCharacterTrainer.Library;
+﻿using ChineseCharacterTrainer.Library;
 using ChineseCharacterTrainer.Model;
 
 namespace ChineseCharacterTrainer.Implementation.ViewModels
@@ -25,6 +24,12 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             _highscoreVM.ReturnToMenuRequested += HighscoreVMReturnToMenuRequested;
 
             Content = _menuVM;
+        }
+
+        public IViewModel Content
+        {
+            get { return _content; }
+            set { _content = value; RaisePropertyChanged(() => Content); }
         }
 
         public void Initialize()
@@ -53,12 +58,6 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
         {
             _summaryVM.Initialize(_menuVM.SelectedDictionary, questionResult);
             Content = _summaryVM;
-        }
-
-        public IViewModel Content
-        {
-            get { return _content; }
-            set { _content = value; RaisePropertyChanged(() => Content); }
         }
     }
 }
