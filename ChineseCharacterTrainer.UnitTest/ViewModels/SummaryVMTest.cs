@@ -11,7 +11,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
     {
         private ISummaryVM _objectUnderTest;
 
-        private readonly QuestionResult _questionResult = new QuestionResult(1, 2, TimeSpan.FromSeconds(1));
+        private QuestionResult _questionResult;
         private readonly Dictionary _dictionary = new Dictionary("Test", null);
 
         private Mock<IRepository> _repositoryMock;
@@ -20,6 +20,11 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         [SetUp]
         public void Initialize()
         {
+            _questionResult = new QuestionResult();
+            _questionResult.AddAnswer(new Answer(true, DateTime.Now, TimeSpan.FromSeconds(1), null));
+            _questionResult.AddAnswer(new Answer(false, DateTime.Now, TimeSpan.FromSeconds(1), null));
+            _questionResult.AddAnswer(new Answer(false, DateTime.Now, TimeSpan.FromSeconds(1), null));
+
             _repositoryMock = new Mock<IRepository>();
             _scoreCalculatorMock = new Mock<IScoreCalculator>();
 
@@ -42,7 +47,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         [Test]
         public void ShouldGetCorrectDurationAfterInitializing()
         {
-            Assert.AreEqual(TimeSpan.FromSeconds(1), _objectUnderTest.Duration);
+            Assert.AreEqual(TimeSpan.FromSeconds(3), _objectUnderTest.Duration);
         }
 
         [Test]

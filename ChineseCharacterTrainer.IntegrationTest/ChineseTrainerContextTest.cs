@@ -17,28 +17,31 @@ namespace ChineseCharacterTrainer.IntegrationTest
         {
             Database.SetInitializer(new DropCreateDatabaseAlways<ChineseTrainerContext>());
 
-            var objectUnderTest = new ChineseTrainerContext(TestDatabaseName);
+            var testSetupContext = new ChineseTrainerContext(TestDatabaseName);
 
-            Guard<Dictionary>(objectUnderTest);
-            Guard<DictionaryEntry>(objectUnderTest);
-            Guard<Translation>(objectUnderTest);
-            Guard<Highscore>(objectUnderTest);
+            Guard<Dictionary>(testSetupContext);
+            Guard<DictionaryEntry>(testSetupContext);
+            Guard<Translation>(testSetupContext);
+            Guard<Highscore>(testSetupContext);
+            Guard<Answer>(testSetupContext);
 
             var dictionary1 = CreateDictionary("1");
-            objectUnderTest.Add(dictionary1);
+            testSetupContext.Add(dictionary1);
 
             var dictionary2 = CreateDictionary("2");
-            objectUnderTest.Add(dictionary2);
+            testSetupContext.Add(dictionary2);
 
             var highscore = CreateHighscore(dictionary1);
-            objectUnderTest.Add(highscore);
+            testSetupContext.Add(highscore);
 
-            objectUnderTest.SaveChanges();
+            testSetupContext.SaveChanges();
         }
 
         private static Highscore CreateHighscore(Dictionary dictionary1)
         {
-            return new Highscore("Frank", dictionary1.Id, new QuestionResult(1, 0, TimeSpan.FromSeconds(1)));
+            var questionResult = new QuestionResult();
+            questionResult.AddAnswer(new Answer(true, DateTime.Now, TimeSpan.FromSeconds(1), dictionary1.Entries[0]));
+            return new Highscore("Frank", dictionary1.Id, questionResult);
         }
 
         private static void Guard<T>(ChineseTrainerContext objectUnderTest) where T : class
@@ -96,5 +99,15 @@ namespace ChineseCharacterTrainer.IntegrationTest
             Assert.AreEqual(1, highscores.Count);
         }
 
+        [Test]
+        public void ShouldGetQuestionResultsFromDatabase()
+        {
+            var objectUnderTest = new ChineseTrainerContext(TestDatabaseName);
+
+            var questionResults = objectUnderTest.GetAll<QuestionResult>().ToList();
+
+            Assert.AreEqual(1, questionResults.Count);
+            Assert.AreEqual(1, questionResults[0].Answers.Count);
+        }
     }
 }

@@ -13,13 +13,17 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
     {
         private ChineseCharacterTrainerService _objectUnderTest;
         private Mock<IChineseTrainerContext> _chineseTrainerContextMock;
+        private Mock<IEntriesSelector> _entriesSelectorMock;
 
         [SetUp]
         public void Initialize()
         {
             _chineseTrainerContextMock = new Mock<IChineseTrainerContext>();
+            _entriesSelectorMock = new Mock<IEntriesSelector>();
+
             _objectUnderTest = new ChineseCharacterTrainerService();
             _objectUnderTest.ChineseTrainerContext = _chineseTrainerContextMock.Object;
+            _objectUnderTest.EntriesSelector = _entriesSelectorMock.Object;
         }
 
         [Test]
@@ -125,6 +129,19 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
             var context = _objectUnderTest.ChineseTrainerContext;
 
             Assert.IsInstanceOf<ChineseTrainerContext>(context);
+        }
+
+        [Test]
+        public void ShouldReturnEntriesFromSelector()
+        {
+            var entry = CreateTestDictionaryWithEntries().Entries[0];
+            _entriesSelectorMock.Setup(p => p.SelectEntries(It.IsAny<List<DictionaryEntry>>(), It.IsAny<QueryObject>()))
+                .Returns(new List<DictionaryEntry> {entry});
+
+            var selectedEntries = _objectUnderTest.GetDictionaryEntriesForQueryObject(new QueryObject(1));
+
+            Assert.AreEqual(1, selectedEntries.Count);
+            Assert.AreEqual(entry, selectedEntries[0]);
         }
 
         private Dictionary CreateTestDictionaryWithEntries()

@@ -8,13 +8,6 @@ namespace ChineseCharacterTrainer.ServiceApp
     [ServiceContract]
     public interface IChineseCharacterTrainerService
     {
-        //[OperationContract]
-        //[ApplyDataContractResolver]
-        //List<Entity> GetAll(string typeName);
-
-        //[OperationContract]
-        //void Add(string typeName, Entity entity);
-
         [OperationContract]
         [ApplyDataContractResolver]
         List<Dictionary> GetDictionaries();
@@ -28,6 +21,10 @@ namespace ChineseCharacterTrainer.ServiceApp
         List<Highscore> GetHighscoresForDictionary(Guid dictionaryId);
 
         [OperationContract]
+        [ApplyDataContractResolver]
+        List<DictionaryEntry> GetDictionaryEntriesForQueryObject(QueryObject queryObject);
+            
+        [OperationContract]
         void AddDictionary(Dictionary dictionary);
 
         [OperationContract]
@@ -35,5 +32,8 @@ namespace ChineseCharacterTrainer.ServiceApp
 
         [OperationContract]
         void AddHighscore(Highscore highscore);
+
+        [OperationContract]
+        void AddAnswer(Answer answer);
     }
 }

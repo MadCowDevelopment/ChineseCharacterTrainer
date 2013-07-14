@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dictionaries", "Dictionarie
 	ProjectSection(SolutionItems) = preProject
 		Dictionaries\basics.csv = Dictionaries\basics.csv
 		Dictionaries\hsk1.csv = Dictionaries\hsk1.csv
+		Dictionaries\hsk2.csv = Dictionaries\hsk2.csv
 		Dictionaries\sample.csv = Dictionaries\sample.csv
 	EndProjectSection
 EndProject

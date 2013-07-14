@@ -7,7 +7,7 @@ namespace ChineseCharacterTrainer.Model
     [DataContract(IsReference = true)]
     public class DictionaryEntry : Entity
     {
-        public DictionaryEntry(string chineseCharacters, string pinyin, List<Translation> translations)
+        public DictionaryEntry(string chineseCharacters, string pinyin, List<Translation> translations) : this()
         {
             ChineseCharacters = chineseCharacters;
             Pinyin = pinyin;
@@ -19,7 +19,10 @@ namespace ChineseCharacterTrainer.Model
                                                               });
         }
 
-        protected DictionaryEntry() { }
+        protected DictionaryEntry()
+        {
+            Answers = new List<Answer>();
+        }
 
         [DataMember]
         public string ChineseCharacters { get; private set; }
@@ -32,5 +35,7 @@ namespace ChineseCharacterTrainer.Model
 
         [DataMember]
         public Guid DictionaryId { get; internal set; }
+
+        public virtual List<Answer> Answers { get; private set; }
     }
 }

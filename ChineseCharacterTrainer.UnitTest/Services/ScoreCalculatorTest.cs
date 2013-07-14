@@ -15,14 +15,32 @@ namespace ChineseCharacterTrainer.UnitTest.Services
             _objectUnderTest = new ScoreCalculator();
         }
 
-        [TestCase(10, 0, 10)]
-        [TestCase(10, 2, 20)]
-        [TestCase(100, 0, 100)]
-        public void ShouldReturnCorrectScore(double seconds, int numberOfIncorrectAnswers, int expectedScore)
+        [TestCase(10, 1, 0, 10)]
+        [TestCase(10, 0, 2, 20)]
+        [TestCase(100, 1, 0, 100)]
+        public void ShouldReturnCorrectScore(double seconds, int numberOfCorrectAnswers, int numberOfIncorrectAnswers, int expectedScore)
         {
-            var score =
-                _objectUnderTest.CalculateScore(
-                    new QuestionResult(0, numberOfIncorrectAnswers, TimeSpan.FromSeconds(seconds)));
+            var questionResult = new QuestionResult();
+
+            for (var i = 0; i < numberOfCorrectAnswers; i++)
+            {
+                questionResult.AddAnswer(new Answer(true,
+                                                    DateTime.Now,
+                                                    TimeSpan.FromSeconds(seconds/
+                                                                         (numberOfCorrectAnswers +
+                                                                          numberOfIncorrectAnswers)), null));
+            }
+
+            for (var i = 0; i < numberOfIncorrectAnswers; i++)
+            {
+                questionResult.AddAnswer(new Answer(false,
+                                                    DateTime.Now,
+                                                    TimeSpan.FromSeconds(seconds/
+                                                                         (numberOfCorrectAnswers +
+                                                                          numberOfIncorrectAnswers)), null));
+            }
+
+            var score = _objectUnderTest.CalculateScore(questionResult);
 
             Assert.AreEqual(expectedScore, score);
         }

@@ -76,6 +76,7 @@
     <Compile Include="Converters\PinyinConverterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceApp\ChineseCharacterTrainerServiceTest.cs" />
+    <Compile Include="ServiceApp\SmartEntriesSelectorTest.cs" />
     <Compile Include="Services\DictionaryImporterTest.cs" />
     <Compile Include="Services\EnumerableShufflerTest.cs" />
     <Compile Include="Services\PinyinBeautifierTest.cs" />

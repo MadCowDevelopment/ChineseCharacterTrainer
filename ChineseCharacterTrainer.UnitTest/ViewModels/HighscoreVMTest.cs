@@ -88,7 +88,9 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
 
         private static Highscore CreateHighscore(string username, Dictionary dictionary, int seconds)
         {
-            return new Highscore(username, dictionary.Id, new QuestionResult(1, 0, TimeSpan.FromSeconds(seconds)));
+            var questionResult = new QuestionResult();
+            questionResult.AddAnswer(new Answer(true, DateTime.Now, TimeSpan.FromSeconds(seconds), null));
+            return new Highscore(username, dictionary.Id, questionResult);
         }
     }
 }

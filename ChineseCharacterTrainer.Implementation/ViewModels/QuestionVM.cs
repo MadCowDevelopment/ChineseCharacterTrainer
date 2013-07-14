@@ -17,9 +17,9 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
         private string _answer;
         private bool _isInAnswerMode;
         private bool _lastAnswerWasCorrect;
-        private int _numberOfCorrectAnswers;
-        private int _numberOfIncorrectAnswers;
         private DateTime _startTime;
+
+        private QuestionResult _questionResult;
 
         public QuestionVM(
             IDateTime dateTime, 
@@ -34,12 +34,10 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
         public void Initialize(List<DictionaryEntry> dictionaryEntries)
         {
             _dictionaryEntryPicker.Initialize(dictionaryEntries);
-            GetNextEntry();
+            _questionResult = new QuestionResult();
             Answer = string.Empty;
             IsInAnswerMode = true;
-            NumberOfCorrectAnswers = 0;
-            NumberOfIncorrectAnswers = 0;
-            _startTime = _dateTime.Now;
+            GetNextEntry();
         }
 
         public ICommand AnswerCommand
@@ -67,14 +65,12 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
 
         public int NumberOfCorrectAnswers
         {
-            get { return _numberOfCorrectAnswers; }
-            private set { _numberOfCorrectAnswers = value; RaisePropertyChanged(() => NumberOfCorrectAnswers); }
+            get { return _questionResult.NumberOfCorrectAnswers; }
         }
 
         public int NumberOfIncorrectAnswers
         {
-            get { return _numberOfIncorrectAnswers; }
-            private set { _numberOfIncorrectAnswers = value; RaisePropertyChanged(() => NumberOfIncorrectAnswers); }
+            get { return _questionResult.NumberOfIncorrectAnswers; }
         }
 
         public DictionaryEntry CurrentEntry
@@ -113,12 +109,7 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             GetNextEntry();
             if (CurrentEntry == null)
             {
-                var duration = _dateTime.Now - _startTime;
-                RaiseQuestionsFinished(
-                    new QuestionResult(
-                        NumberOfCorrectAnswers,
-                        NumberOfIncorrectAnswers,
-                        duration));
+                RaiseQuestionsFinished(_questionResult);
                 return;
             }
 
@@ -129,12 +120,22 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
         {
             LastAnswerWasCorrect = RemoveWhitespaces(Answer) == RemoveWhitespaces(CurrentEntry.Pinyin);
 
-            if (LastAnswerWasCorrect) NumberOfCorrectAnswers++;
+            if (LastAnswerWasCorrect)
+            {
+                AddAnswer(true);
+            }
             else
             {
+                AddAnswer(false);
                 _dictionaryEntryPicker.QueueEntry(CurrentEntry);
-                NumberOfIncorrectAnswers++;
             }
+        }
+
+        private void AddAnswer(bool isCorrect)
+        {
+            _questionResult.AddAnswer(new Answer(isCorrect, _dateTime.Now, _dateTime.Now - _startTime, CurrentEntry));
+            RaisePropertyChanged(() => NumberOfCorrectAnswers);
+            RaisePropertyChanged(() => NumberOfIncorrectAnswers);
         }
 
         private string RemoveWhitespaces(string value)
@@ -145,6 +146,7 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
 
         private void GetNextEntry()
         {
+            _startTime = _dateTime.Now;
             CurrentEntry = _dictionaryEntryPicker.GetNextEntry();
         }
     }

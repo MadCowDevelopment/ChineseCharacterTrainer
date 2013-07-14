@@ -10,8 +10,9 @@ namespace ChineseCharacterTrainer.ServiceApp
     public class ChineseCharacterTrainerService : IChineseCharacterTrainerService
     {
         private IChineseTrainerContext _chineseTrainerContext;
+        private IEntriesSelector _entriesSelector;
 
-        public IChineseTrainerContext ChineseTrainerContext
+        internal IChineseTrainerContext ChineseTrainerContext
         {
             get
             {
@@ -22,22 +23,21 @@ namespace ChineseCharacterTrainer.ServiceApp
             set { _chineseTrainerContext = value; }
         }
 
+        internal IEntriesSelector EntriesSelector
+        {
+            get
+            {
+                return _entriesSelector ??
+                (_entriesSelector = new SmartEntriesSelector());    
+            }
+
+            set { _entriesSelector = value; }
+        }
+
         public ChineseCharacterTrainerService()
         {
             Database.SetInitializer(new DontDropExistingDbCreateTablesIfModelChanged<ChineseTrainerContext>());
         }
-
-        //public List<Entity> GetAll(string typeName)
-        //{
-        //    var result = ChineseTrainerContext.GetAll(Type.GetType(typeName));
-        //    return result;
-        //}
-
-        //public void Add(string typeName, Entity entity)
-        //{
-        //    ChineseTrainerContext.Add(Type.GetType(typeName), entity);
-        //    ChineseTrainerContext.SaveChanges();
-        //}
 
         public List<Dictionary> GetDictionaries()
         {
@@ -57,6 +57,13 @@ namespace ChineseCharacterTrainer.ServiceApp
             return result;
         }
 
+        public List<DictionaryEntry> GetDictionaryEntriesForQueryObject(QueryObject queryObject)
+        {
+            var allEntries = ChineseTrainerContext.GetAll<DictionaryEntry>().ToList();
+            var selectedEntries = EntriesSelector.SelectEntries(allEntries, queryObject);
+            return selectedEntries;
+        }
+
         public void AddDictionary(Dictionary dictionary)
         {
             ChineseTrainerContext.Add(dictionary);
@@ -72,6 +79,12 @@ namespace ChineseCharacterTrainer.ServiceApp
         public void AddHighscore(Highscore highscore)
         {
             ChineseTrainerContext.Add(highscore);
+            ChineseTrainerContext.SaveChanges();
+        }
+
+        public void AddAnswer(Answer answer)
+        {
+            ChineseTrainerContext.Add(answer);
             ChineseTrainerContext.SaveChanges();
         }
     }

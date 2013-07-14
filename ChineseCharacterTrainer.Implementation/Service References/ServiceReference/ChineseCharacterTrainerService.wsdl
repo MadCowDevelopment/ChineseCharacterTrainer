@@ -25,6 +25,12 @@
   <wsdl:message name="IChineseCharacterTrainerService_GetHighscoresForDictionary_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetHighscoresForDictionaryResponse" />
   </wsdl:message>
+  <wsdl:message name="IChineseCharacterTrainerService_GetDictionaryEntriesForQueryObject_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDictionaryEntriesForQueryObject" />
+  </wsdl:message>
+  <wsdl:message name="IChineseCharacterTrainerService_GetDictionaryEntriesForQueryObject_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDictionaryEntriesForQueryObjectResponse" />
+  </wsdl:message>
   <wsdl:message name="IChineseCharacterTrainerService_AddDictionary_InputMessage">
     <wsdl:part name="parameters" element="tns:AddDictionary" />
   </wsdl:message>
@@ -43,6 +49,12 @@
   <wsdl:message name="IChineseCharacterTrainerService_AddHighscore_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddHighscoreResponse" />
   </wsdl:message>
+  <wsdl:message name="IChineseCharacterTrainerService_AddAnswer_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddAnswer" />
+  </wsdl:message>
+  <wsdl:message name="IChineseCharacterTrainerService_AddAnswer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddAnswerResponse" />
+  </wsdl:message>
   <wsdl:portType name="IChineseCharacterTrainerService">
     <wsdl:operation name="GetDictionaries">
       <wsdl:input wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/GetDictionaries" message="tns:IChineseCharacterTrainerService_GetDictionaries_InputMessage" />
@@ -56,6 +68,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/GetHighscoresForDictionary" message="tns:IChineseCharacterTrainerService_GetHighscoresForDictionary_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/GetHighscoresForDictionaryResponse" message="tns:IChineseCharacterTrainerService_GetHighscoresForDictionary_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetDictionaryEntriesForQueryObject">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/GetDictionaryEntriesForQueryObject" message="tns:IChineseCharacterTrainerService_GetDictionaryEntriesForQueryObject_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/GetDictionaryEntriesForQueryObjectResponse" message="tns:IChineseCharacterTrainerService_GetDictionaryEntriesForQueryObject_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="AddDictionary">
       <wsdl:input wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/AddDictionary" message="tns:IChineseCharacterTrainerService_AddDictionary_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/AddDictionaryResponse" message="tns:IChineseCharacterTrainerService_AddDictionary_OutputMessage" />
@@ -67,6 +83,10 @@
     <wsdl:operation name="AddHighscore">
       <wsdl:input wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/AddHighscore" message="tns:IChineseCharacterTrainerService_AddHighscore_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/AddHighscoreResponse" message="tns:IChineseCharacterTrainerService_AddHighscore_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddAnswer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/AddAnswer" message="tns:IChineseCharacterTrainerService_AddAnswer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/AddAnswerResponse" message="tns:IChineseCharacterTrainerService_AddAnswer_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IChineseCharacterTrainerService" type="tns:IChineseCharacterTrainerService">
@@ -98,6 +118,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetDictionaryEntriesForQueryObject">
+      <soap:operation soapAction="http://tempuri.org/IChineseCharacterTrainerService/GetDictionaryEntriesForQueryObject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="AddDictionary">
       <soap:operation soapAction="http://tempuri.org/IChineseCharacterTrainerService/AddDictionary" style="document" />
       <wsdl:input>
@@ -118,6 +147,15 @@
     </wsdl:operation>
     <wsdl:operation name="AddHighscore">
       <soap:operation soapAction="http://tempuri.org/IChineseCharacterTrainerService/AddHighscore" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddAnswer">
+      <soap:operation soapAction="http://tempuri.org/IChineseCharacterTrainerService/AddAnswer" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

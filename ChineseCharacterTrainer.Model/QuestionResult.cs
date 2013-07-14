@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace ChineseCharacterTrainer.Model
@@ -6,22 +8,31 @@ namespace ChineseCharacterTrainer.Model
     [DataContract]
     public class QuestionResult : Entity
     {
-        public QuestionResult(int numberOfCorrectAnswers, int numberOfIncorrectAnswers, TimeSpan duration)
+        public QuestionResult()
         {
-            NumberOfCorrectAnswers = numberOfCorrectAnswers;
-            NumberOfIncorrectAnswers = numberOfIncorrectAnswers;
-            Duration = duration;
+            Answers = new List<Answer>();
         }
 
-        protected QuestionResult() { }
+        public virtual List<Answer> Answers { get; private set; }
 
-        [DataMember]
-        public int NumberOfCorrectAnswers { get; private set; }
+        public int NumberOfCorrectAnswers { get { return Answers.Count(p => p.IsCorrect); } }
 
-        [DataMember]
-        public int NumberOfIncorrectAnswers { get; private set; }
+        public int NumberOfIncorrectAnswers { get { return Answers.Count(p => !p.IsCorrect); } }
 
-        [DataMember]
-        public TimeSpan Duration { get; private set; }
+        public TimeSpan Duration
+        {
+            get
+            {
+                var duration = new TimeSpan();
+                return Answers.Aggregate(duration, (current, answer) => current + answer.Duration);
+            }
+        }
+
+        public void AddAnswer(Answer answer)
+        {
+            answer.QuestionResultId = Id;
+            answer.QuestionResult = this;
+            Answers.Add(answer);
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace ChineseCharacterTrainer.Implementation.Services
         void AddHighscore(Highscore highscore);
         List<Dictionary> GetAllDictionaries();
         List<Highscore> GetAllHighscores(Guid dictionaryId);
+        List<DictionaryEntry> GetDictionaryEntriesForQueryObject(QueryObject queryObject);
     }
 }

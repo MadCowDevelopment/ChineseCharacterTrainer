@@ -1,7 +1,6 @@
-﻿using System;
-using System.Linq;
-using ChineseCharacterTrainer.Implementation.ServiceReference;
+﻿using ChineseCharacterTrainer.Implementation.ServiceReference;
 using ChineseCharacterTrainer.Model;
+using System;
 using System.Collections.Generic;
 
 namespace ChineseCharacterTrainer.Implementation.Services
@@ -15,17 +14,6 @@ namespace ChineseCharacterTrainer.Implementation.Services
             _chineseCharacterTrainerService = chineseCharacterTrainerService;
         }
 
-        //public List<T> GetAll<T>() where T : Entity
-        //{
-        //    var result = _chineseCharacterTrainerService.GetAll(typeof (T).AssemblyQualifiedName);
-        //    return result.Select(p => p as T).ToList();
-        //}
-
-        //public void Add<T>(T entity) where T : Entity
-        //{
-        //    _chineseCharacterTrainerService.Add(typeof(T).AssemblyQualifiedName, entity);
-        //}
-
         public void AddDictionary(Dictionary dictionary)
         {
             _chineseCharacterTrainerService.AddDictionary(dictionary);
@@ -38,6 +26,10 @@ namespace ChineseCharacterTrainer.Implementation.Services
         public void AddHighscore(Highscore highscore)
         {
             _chineseCharacterTrainerService.AddHighscore(highscore);
+            foreach (var answer in highscore.QuestionResult.Answers)
+            {
+                _chineseCharacterTrainerService.AddAnswer(answer);
+            }
         }
 
         public List<Dictionary> GetAllDictionaries()
@@ -49,6 +41,11 @@ namespace ChineseCharacterTrainer.Implementation.Services
             }
 
             return dictionaries;
+        }
+
+        public List<DictionaryEntry> GetDictionaryEntriesForQueryObject(QueryObject queryObject)
+        {
+            return _chineseCharacterTrainerService.GetDictionaryEntriesForQueryObject(queryObject);
         }
 
         public List<Highscore> GetAllHighscores(Guid dictionaryId)

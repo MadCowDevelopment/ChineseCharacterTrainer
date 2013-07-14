@@ -1,5 +1,4 @@
-﻿using System;
-using ChineseCharacterTrainer.Implementation.ServiceReference;
+﻿using ChineseCharacterTrainer.Implementation.ServiceReference;
 using ChineseCharacterTrainer.Implementation.Services;
 using ChineseCharacterTrainer.Model;
 using Moq;
@@ -78,9 +77,20 @@ namespace ChineseCharacterTrainer.UnitTest.Services
             Assert.AreEqual(2, highscores.Count);
         }
 
+        [Test]
+        public void ShouldGetDictionaryEntriesForQueryObject()
+        {
+            _serviceMock.Setup(p => p.GetDictionaryEntriesForQueryObject(It.IsAny<QueryObject>())).Returns(
+                new List<DictionaryEntry>(_dictionary.Entries));
+
+            var entries = _objectUnderTest.GetDictionaryEntriesForQueryObject(new QueryObject(1));
+
+            Assert.AreEqual(_dictionary.Entries, entries);
+        }
+
         private Highscore CreateTestHighscore()
         {
-            return new Highscore("Frank", _dictionary.Id, new QuestionResult(0, 0, TimeSpan.FromSeconds(1)));
+            return new Highscore("Frank", _dictionary.Id, new QuestionResult());
         }
     }
 }

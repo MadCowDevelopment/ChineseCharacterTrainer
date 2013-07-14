@@ -44,11 +44,13 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Answer.cs" />
     <Compile Include="Dictionary.cs" />
     <Compile Include="DictionaryEntry.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Highscore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryObject.cs" />
     <Compile Include="QuestionResult.cs" />
     <Compile Include="Translation.cs" />
   </ItemGroup>

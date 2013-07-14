@@ -42,10 +42,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetDictionaryEntriesForQueryObject">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="queryObject" nillable="true" type="q6:QueryObject" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDictionaryEntriesForQueryObjectResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="GetDictionaryEntriesForQueryObjectResult" nillable="true" type="q7:ArrayOfDictionaryEntry" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="AddDictionary">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="dictionary" nillable="true" type="q6:Dictionary" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="dictionary" nillable="true" type="q8:Dictionary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -57,7 +71,7 @@
   <xs:element name="AddDictionaryEntry">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="dictionaryEntry" nillable="true" type="q7:DictionaryEntry" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="dictionaryEntry" nillable="true" type="q9:DictionaryEntry" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -69,11 +83,23 @@
   <xs:element name="AddHighscore">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="highscore" nillable="true" type="q8:Highscore" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="highscore" nillable="true" type="q10:Highscore" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddHighscoreResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddAnswer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="answer" nillable="true" type="q11:Answer" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddAnswerResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

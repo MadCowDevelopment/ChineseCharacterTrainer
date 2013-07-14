@@ -11,7 +11,6 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Entity">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Entries" nillable="true" type="tns:ArrayOfDictionaryEntry" />
           <xs:element minOccurs="0" name="Highscores" nillable="true" type="tns:ArrayOfHighscore" />
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
         </xs:sequence>
@@ -32,7 +31,6 @@
       <xs:extension base="tns:Entity">
         <xs:sequence>
           <xs:element minOccurs="0" name="ChineseCharacters" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Dictionary" nillable="true" type="tns:Dictionary" />
           <xs:element minOccurs="0" name="DictionaryId" type="ser:guid" />
           <xs:element minOccurs="0" name="Pinyin" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Translations" nillable="true" type="tns:ArrayOfTranslation" />
@@ -74,25 +72,43 @@
   <xs:complexType name="QuestionResult">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Entity">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Duration" type="ser:duration" />
-          <xs:element minOccurs="0" name="NumberOfCorrectAnswers" type="xs:int" />
-          <xs:element minOccurs="0" name="NumberOfIncorrectAnswers" type="xs:int" />
-        </xs:sequence>
+        <xs:sequence />
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="QuestionResult" nillable="true" type="tns:QuestionResult" />
-  <xs:complexType name="ArrayOfDictionaryEntry">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="DictionaryEntry" nillable="true" type="tns:DictionaryEntry" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfDictionaryEntry" nillable="true" type="tns:ArrayOfDictionaryEntry" />
   <xs:complexType name="ArrayOfHighscore">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Highscore" nillable="true" type="tns:Highscore" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfHighscore" nillable="true" type="tns:ArrayOfHighscore" />
+  <xs:complexType name="ArrayOfDictionaryEntry">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DictionaryEntry" nillable="true" type="tns:DictionaryEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDictionaryEntry" nillable="true" type="tns:ArrayOfDictionaryEntry" />
+  <xs:complexType name="QueryObject">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="NumberOfEntries" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="QueryObject" nillable="true" type="tns:QueryObject" />
+  <xs:complexType name="Answer">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Entity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AnswerTime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DictionaryEntry" nillable="true" type="tns:DictionaryEntry" />
+          <xs:element minOccurs="0" name="DictionaryEntryId" type="ser:guid" />
+          <xs:element minOccurs="0" name="Duration" type="ser:duration" />
+          <xs:element minOccurs="0" name="IsCorrect" type="xs:boolean" />
+          <xs:element minOccurs="0" name="QuestionResult" nillable="true" type="tns:QuestionResult" />
+          <xs:element minOccurs="0" name="QuestionResultId" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Answer" nillable="true" type="tns:Answer" />
 </xs:schema>
