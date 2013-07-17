@@ -7,8 +7,12 @@
         <views:QuestionView/>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type viewModels:SummaryVM}">
-        <views:SummaryView/>
+    <DataTemplate DataType="{x:Type viewModels:CompetitionSummaryVM}">
+        <views:CompetitionSummaryView/>
+    </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type viewModels:PracticeSummaryVM}">
+        <views:PracticeSummaryView/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type viewModels:MenuVM}">

@@ -20,7 +20,8 @@ namespace ChineseCharacterTrainer.Implementation.Utilities
             _standardKernel.Bind<IMainWindowVM>().To<MainWindowVM>().InSingletonScope();
             _standardKernel.Bind<IMenuVM>().To<MenuVM>().InSingletonScope();
             _standardKernel.Bind<IQuestionVM>().To<QuestionVM>().InSingletonScope();
-            _standardKernel.Bind<ISummaryVM>().To<SummaryVM>().InSingletonScope();
+            _standardKernel.Bind<ICompetitionSummaryVM>().To<CompetitionSummaryVM>().InSingletonScope();
+            _standardKernel.Bind<IPracticeSummaryVM>().To<PracticeSummaryVM>().InSingletonScope();
             _standardKernel.Bind<IHighscoreVM>().To<HighscoreVM>().InSingletonScope();
 
             _standardKernel.Bind<IWordlistParser>().To<WordlistParser>().InSingletonScope();

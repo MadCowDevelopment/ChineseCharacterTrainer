@@ -34,6 +34,9 @@ namespace ChineseCharacterTrainer.ServiceApp
         void AddHighscore(Highscore highscore);
 
         [OperationContract]
+        void AddQuestionResult(QuestionResult questionResult);
+
+        [OperationContract]
         void AddAnswer(Answer answer);
     }
 }

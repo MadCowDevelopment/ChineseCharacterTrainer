@@ -8,6 +8,7 @@ namespace ChineseCharacterTrainer.Implementation.Services
     {
         void AddDictionary(Dictionary dictionary);
         void AddHighscore(Highscore highscore);
+        void AddQuestionResult(QuestionResult questionResult);
         List<Dictionary> GetAllDictionaries();
         List<Highscore> GetAllHighscores(Guid dictionaryId);
         List<DictionaryEntry> GetDictionaryEntriesForQueryObject(QueryObject queryObject);

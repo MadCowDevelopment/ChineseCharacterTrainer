@@ -73,12 +73,15 @@
     <Compile Include="MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PracticeSummaryView.xaml.cs">
+      <DependentUpon>PracticeSummaryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ServiceLocatorSingleton.cs" />
     <Compile Include="QuestionView.xaml.cs">
       <DependentUpon>QuestionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SummaryView.xaml.cs">
-      <DependentUpon>SummaryView.xaml</DependentUpon>
+    <Compile Include="CompetitionSummaryView.xaml.cs">
+      <DependentUpon>CompetitionSummaryView.xaml</DependentUpon>
     </Compile>
     <Page Include="DataTemplates.xaml">
       <SubType>Designer</SubType>
@@ -104,11 +107,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PracticeSummaryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="QuestionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SummaryView.xaml">
+    <Page Include="CompetitionSummaryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

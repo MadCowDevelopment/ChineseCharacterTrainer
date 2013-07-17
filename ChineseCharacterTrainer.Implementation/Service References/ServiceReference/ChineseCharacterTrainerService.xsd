@@ -92,10 +92,22 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="AddQuestionResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="questionResult" nillable="true" type="q11:QuestionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddQuestionResultResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="AddAnswer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="answer" nillable="true" type="q11:Answer" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="answer" nillable="true" type="q12:Answer" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

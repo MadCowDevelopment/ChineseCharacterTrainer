@@ -9,7 +9,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
 {
     public class SummaryVMTest
     {
-        private ISummaryVM _objectUnderTest;
+        private ICompetitionSummaryVM _objectUnderTest;
 
         private QuestionResult _questionResult;
         private readonly Dictionary _dictionary = new Dictionary("Test", null);
@@ -28,7 +28,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
             _repositoryMock = new Mock<IRepository>();
             _scoreCalculatorMock = new Mock<IScoreCalculator>();
 
-            _objectUnderTest = new SummaryVM(_repositoryMock.Object, _scoreCalculatorMock.Object);
+            _objectUnderTest = new CompetitionSummaryVM(_repositoryMock.Object, _scoreCalculatorMock.Object);
             _objectUnderTest.Initialize(_dictionary, _questionResult);
         }
 

@@ -12,8 +12,12 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <GroupBox Grid.Row="0" Header="Import">
+        <GroupBox Grid.Row="0" Grid.Column="0" Header="Import">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>
@@ -39,12 +43,18 @@
 
             </Grid>
         </GroupBox>
+        
+        <GroupBox Grid.Row="1" Grid.Column="0" Header="Practice">
+            <StackPanel>
+                <Button Margin="10" Content="Start practice" Command="{Binding StartPracticeCommand}"/>
+            </StackPanel>
+        </GroupBox>
 
-        <GroupBox Grid.Row="1" Header="Start training">
+        <GroupBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Header="Competition">
             <StackPanel>
                 <ComboBox Margin="10" ItemsSource="{Binding AvailableDictionaries}" 
                           DisplayMemberPath="Name" SelectedItem="{Binding SelectedDictionary}"/>
-                <Button Margin="10" Content="Open dictionary" Command="{Binding OpenCommand}"/>
+                <Button Margin="10" Content="Start competition" Command="{Binding StartCompetitionCommand}"/>
             </StackPanel>
         </GroupBox>
 

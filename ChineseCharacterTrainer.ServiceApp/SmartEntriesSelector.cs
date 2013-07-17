@@ -9,6 +9,11 @@ namespace ChineseCharacterTrainer.ServiceApp
     {
         public List<DictionaryEntry> SelectEntries(List<DictionaryEntry> entries, QueryObject queryObject)
         {
+            if (entries.Count == 0)
+            {
+                return entries;
+            }
+
             var items = CreateQueryItems(entries);
             CalculateTimeFactor(items);
             return SelectMostRelevantEntries(queryObject, items);
@@ -31,22 +36,33 @@ namespace ChineseCharacterTrainer.ServiceApp
 
         private static void CalculateTimeFactor(List<QueryItem> items)
         {
-            var oldestAnswerTicks = items.SelectMany(p => p.TenMostRecentAnswers).Min(p => p.AnswerTime.Ticks);
-
-            var currentTicks = DateTime.Now.Ticks;
-            foreach (var item in items)
+            var allMostRecentAnswers = items.SelectMany(p => p.TenMostRecentAnswers).ToList();
+            if (!allMostRecentAnswers.Any())
             {
-                var oldestAnswer = item.TenMostRecentAnswers.FirstOrDefault();
-                if (oldestAnswer == null)
+                foreach (var item in items)
                 {
                     item.TimeFactor = 1;
                 }
-                else
+            }
+            else
+            {
+                var oldestAnswerTicks = allMostRecentAnswers.Min(p => p.AnswerTime.Ticks);
+
+                var currentTicks = DateTime.Now.Ticks;
+                foreach (var item in items)
                 {
-                    item.TimeFactor = CalculateTimeFactor(
-                        currentTicks,
-                        oldestAnswerTicks,
-                        oldestAnswer.AnswerTime.Ticks);
+                    var oldestAnswer = item.TenMostRecentAnswers.FirstOrDefault();
+                    if (oldestAnswer == null)
+                    {
+                        item.TimeFactor = 1;
+                    }
+                    else
+                    {
+                        item.TimeFactor = CalculateTimeFactor(
+                            currentTicks,
+                            oldestAnswerTicks,
+                            oldestAnswer.AnswerTime.Ticks);
+                    }
                 }
             }
         }

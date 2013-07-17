@@ -17,7 +17,6 @@ namespace ChineseCharacterTrainer.Model
 
         protected Answer() { }
 
-        [DataMember]
         public virtual DictionaryEntry DictionaryEntry { get; private set; }
 
         [DataMember]
@@ -35,7 +34,6 @@ namespace ChineseCharacterTrainer.Model
         [DataMember]
         public Guid QuestionResultId { get; set; }
 
-        [DataMember]
         public virtual QuestionResult QuestionResult { get; set; }
     }
 }

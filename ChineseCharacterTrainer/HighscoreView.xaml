@@ -61,7 +61,7 @@
             <TextBlock Grid.Column="1" Grid.Row="1" FontSize="24" Text="{Binding PersonalBest}"/>
         </Grid>
         
-        <Button Grid.Row="4" Margin="10" Content="Back to menu" Command="{Binding ContinueCommand}"/>
+        <Button Grid.Row="4" Margin="10" Content="Return to menu" Command="{Binding ReturnToMenuCommand}"/>
 
     </Grid>
 </UserControl>

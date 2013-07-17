@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,11 +16,11 @@ using System.Windows.Shapes;
 namespace ChineseCharacterTrainer
 {
     /// <summary>
-    /// Interaction logic for SummaryView.xaml
+    /// Interaction logic for PracticeSummaryView.xaml
     /// </summary>
-    public partial class SummaryView : UserControl
+    public partial class PracticeSummaryView : UserControl
     {
-        public SummaryView()
+        public PracticeSummaryView()
         {
             InitializeComponent();
         }

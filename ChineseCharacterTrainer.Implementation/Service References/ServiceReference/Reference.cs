@@ -41,6 +41,9 @@ namespace ChineseCharacterTrainer.Implementation.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChineseCharacterTrainerService/AddHighscore", ReplyAction="http://tempuri.org/IChineseCharacterTrainerService/AddHighscoreResponse")]
         void AddHighscore(ChineseCharacterTrainer.Model.Highscore highscore);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChineseCharacterTrainerService/AddQuestionResult", ReplyAction="http://tempuri.org/IChineseCharacterTrainerService/AddQuestionResultResponse")]
+        void AddQuestionResult(ChineseCharacterTrainer.Model.QuestionResult questionResult);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChineseCharacterTrainerService/AddAnswer", ReplyAction="http://tempuri.org/IChineseCharacterTrainerService/AddAnswerResponse")]
         void AddAnswer(ChineseCharacterTrainer.Model.Answer answer);
     }
@@ -98,6 +101,10 @@ namespace ChineseCharacterTrainer.Implementation.ServiceReference {
         
         public void AddHighscore(ChineseCharacterTrainer.Model.Highscore highscore) {
             base.Channel.AddHighscore(highscore);
+        }
+        
+        public void AddQuestionResult(ChineseCharacterTrainer.Model.QuestionResult questionResult) {
+            base.Channel.AddQuestionResult(questionResult);
         }
         
         public void AddAnswer(ChineseCharacterTrainer.Model.Answer answer) {

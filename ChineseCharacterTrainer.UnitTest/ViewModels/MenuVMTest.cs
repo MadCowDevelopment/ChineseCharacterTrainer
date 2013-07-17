@@ -112,35 +112,48 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         }
 
         [Test]
-        public void ShouldBeAbleToOpenWhenDictionaryIsSelected()
+        public void ShouldBeAbleToStartCompetitionWhenDictionaryIsSelected()
         {
             _objectUnderTest.SelectedDictionary = new Dictionary("1", null);
 
-            var canOpen = _objectUnderTest.OpenCommand.CanExecute(null);
+            var canOpen = _objectUnderTest.StartCompetitionCommand.CanExecute(null);
 
             Assert.IsTrue(canOpen);
         }
 
         [Test]
-        public void ShouldNotBeAbleToOpenWhenNoDictionaryIsSelected()
+        public void ShouldNotBeAbleToStartCompetitionWhenNoDictionaryIsSelected()
         {
             _objectUnderTest.SelectedDictionary = null;
 
-            var canOpen = _objectUnderTest.OpenCommand.CanExecute(null);
+            var canOpen = _objectUnderTest.StartCompetitionCommand.CanExecute(null);
 
             Assert.IsFalse(canOpen);
         }
 
         [Test]
-        public void ShouldRaiseEventWhenDictionaryShouldBeOpened()
+        public void ShouldRaiseEventWhenCompetitionShouldBeStarted()
         {
             _objectUnderTest.SelectedDictionary = new Dictionary("1", null);
             Dictionary dictionaryToOpen = null;
-            _objectUnderTest.OpenDictionaryRequested += dictionary => dictionaryToOpen = dictionary;
+            _objectUnderTest.StartCompetitionRequested += dictionary => dictionaryToOpen = dictionary;
 
-            _objectUnderTest.OpenCommand.Execute(null);
+            _objectUnderTest.StartCompetitionCommand.Execute(null);
 
             Assert.AreEqual(_objectUnderTest.SelectedDictionary, dictionaryToOpen);
+        }
+
+        [Test]
+        public void ShouldRaiseEventWhenPracticeShouldBeStarted()
+        {
+            _dictionaryRepositoryMock.Setup(p => p.GetDictionaryEntriesForQueryObject(It.IsAny<QueryObject>()))
+                                     .Returns(new List<DictionaryEntry> {new DictionaryEntry(null, null, null)});
+            List<DictionaryEntry> dictionaryEntries = null;
+            _objectUnderTest.StartPracticeRequested += args => dictionaryEntries = args;
+
+            _objectUnderTest.StartPracticeCommand.Execute(null);
+
+            Assert.IsNotNull(dictionaryEntries);
         }
 
         [Test]

@@ -13,7 +13,8 @@ namespace ChineseCharacterTrainer.IntegrationTest
     {
         [TestCase(typeof(IMainWindowVM), typeof(MainWindowVM))]
         [TestCase(typeof(IQuestionVM), typeof(QuestionVM))]
-        [TestCase(typeof(ISummaryVM), typeof(SummaryVM))]
+        [TestCase(typeof(ICompetitionSummaryVM), typeof(CompetitionSummaryVM))]
+        [TestCase(typeof(IPracticeSummaryVM), typeof(PracticeSummaryVM))]
         [TestCase(typeof(IMenuVM), typeof(MenuVM))]
         [TestCase(typeof(IHighscoreVM), typeof(HighscoreVM))]
         [TestCase(typeof(IDateTime), typeof(DateTimeWrapper))]

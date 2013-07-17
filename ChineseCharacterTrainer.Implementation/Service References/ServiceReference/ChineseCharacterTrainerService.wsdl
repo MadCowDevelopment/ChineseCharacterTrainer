@@ -49,6 +49,12 @@
   <wsdl:message name="IChineseCharacterTrainerService_AddHighscore_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddHighscoreResponse" />
   </wsdl:message>
+  <wsdl:message name="IChineseCharacterTrainerService_AddQuestionResult_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddQuestionResult" />
+  </wsdl:message>
+  <wsdl:message name="IChineseCharacterTrainerService_AddQuestionResult_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddQuestionResultResponse" />
+  </wsdl:message>
   <wsdl:message name="IChineseCharacterTrainerService_AddAnswer_InputMessage">
     <wsdl:part name="parameters" element="tns:AddAnswer" />
   </wsdl:message>
@@ -83,6 +89,10 @@
     <wsdl:operation name="AddHighscore">
       <wsdl:input wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/AddHighscore" message="tns:IChineseCharacterTrainerService_AddHighscore_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/AddHighscoreResponse" message="tns:IChineseCharacterTrainerService_AddHighscore_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddQuestionResult">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/AddQuestionResult" message="tns:IChineseCharacterTrainerService_AddQuestionResult_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/AddQuestionResultResponse" message="tns:IChineseCharacterTrainerService_AddQuestionResult_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddAnswer">
       <wsdl:input wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/AddAnswer" message="tns:IChineseCharacterTrainerService_AddAnswer_InputMessage" />
@@ -147,6 +157,15 @@
     </wsdl:operation>
     <wsdl:operation name="AddHighscore">
       <soap:operation soapAction="http://tempuri.org/IChineseCharacterTrainerService/AddHighscore" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddQuestionResult">
+      <soap:operation soapAction="http://tempuri.org/IChineseCharacterTrainerService/AddQuestionResult" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

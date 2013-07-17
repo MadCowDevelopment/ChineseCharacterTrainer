@@ -32,6 +32,15 @@ namespace ChineseCharacterTrainer.Implementation.Services
             }
         }
 
+        public void AddQuestionResult(QuestionResult questionResult)
+        {
+            _chineseCharacterTrainerService.AddQuestionResult(questionResult);
+            foreach (var answer in questionResult.Answers)
+            {
+                _chineseCharacterTrainerService.AddAnswer(answer);
+            }
+        }
+
         public List<Dictionary> GetAllDictionaries()
         {
             var dictionaries = _chineseCharacterTrainerService.GetDictionaries();

@@ -21,7 +21,7 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             _scoreCalculator = scoreCalculator;
         }
 
-        public ICommand ContinueCommand
+        public ICommand ReturnToMenuCommand
         {
             get { return _continueCommand ?? (_continueCommand = new RelayCommand(p => RaiseReturnToMenuRequested())); }
         }

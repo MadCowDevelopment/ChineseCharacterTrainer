@@ -47,7 +47,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
             var eventWasRaised = false;
             _objectUnderTest.ReturnToMenuRequested += () => eventWasRaised = true;
 
-            _objectUnderTest.ContinueCommand.Execute(null);
+            _objectUnderTest.ReturnToMenuCommand.Execute(null);
 
             Assert.IsTrue(eventWasRaised);
         }

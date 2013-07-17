@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChineseCharacterTrainer.Library;
 using ChineseCharacterTrainer.Model;
@@ -12,9 +13,11 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
         Dictionary SelectedDictionary { get; set; }
         ObservableCollection<Dictionary> AvailableDictionaries { get; } 
         IAsyncCommand ImportCommand { get; }
-        ICommand OpenCommand { get; }
+        ICommand StartCompetitionCommand { get; }
+        ICommand StartPracticeCommand { get; }
         ICommand BrowseCommand { get; }
-        event Action<Dictionary> OpenDictionaryRequested;
+        event Action<Dictionary> StartCompetitionRequested;
+        event Action<List<DictionaryEntry>> StartPracticeRequested;
         string Name { get; set; }
         string FileName { get; set; }
 

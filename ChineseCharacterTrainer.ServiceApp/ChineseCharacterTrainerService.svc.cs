@@ -82,6 +82,12 @@ namespace ChineseCharacterTrainer.ServiceApp
             ChineseTrainerContext.SaveChanges();
         }
 
+        public void AddQuestionResult(QuestionResult questionResult)
+        {
+            ChineseTrainerContext.Add(questionResult);
+            ChineseTrainerContext.SaveChanges();
+        }
+
         public void AddAnswer(Answer answer)
         {
             ChineseTrainerContext.Add(answer);

@@ -12,7 +12,7 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
         int CurrentHighscore { get; }
         int PersonalBest { get; }
 
-        ICommand ContinueCommand { get; }
+        ICommand ReturnToMenuCommand { get; }
 
         void Initialize(Highscore currentHighscore);
 

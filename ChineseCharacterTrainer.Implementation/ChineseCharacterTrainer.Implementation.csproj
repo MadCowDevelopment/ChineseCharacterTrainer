@@ -90,6 +90,7 @@
     <Compile Include="Utilities\IDateTime.cs" />
     <Compile Include="Utilities\IServiceLocator.cs" />
     <Compile Include="Utilities\ServiceLocator.cs" />
+    <Compile Include="ViewModels\CompetitionSummaryVM.cs" />
     <Compile Include="ViewModels\HighscoreVM.cs" />
     <Compile Include="ViewModels\IHighscoreVM.cs" />
     <Compile Include="ViewModels\IMainWindowVM.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="ViewModels\ISummaryVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="ViewModels\MenuVM.cs" />
+    <Compile Include="ViewModels\PracticeSummaryVM.cs" />
     <Compile Include="ViewModels\QuestionVM.cs" />
     <Compile Include="ViewModels\SummaryVM.cs" />
   </ItemGroup>
