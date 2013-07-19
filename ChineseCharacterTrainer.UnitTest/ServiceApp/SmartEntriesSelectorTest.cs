@@ -17,7 +17,7 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
         [SetUp]
         public void Initialize()
         {
-            _queryObject = new QueryObject(1);
+            _queryObject = new QueryObject(new Guid(), 1);
             _entries = new List<DictionaryEntry>();
             CreateEntries();
 
@@ -48,6 +48,20 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
             AddAnswer(_entry2, false, new DateTime(2010, 1, 2));
 
             AssertCorrectItemGetsSelected(_entry1);
+        }
+
+        [Test]
+        public void ShouldGetOneEntryIfThereAreNoAnswersAtAll()
+        {
+            AssertCorrectItemGetsSelected(_entry1);
+        }
+
+        [Test]
+        public void ShouldReturnEmptyListWhenPassedInEmptyList()
+        {
+            var entries = _objectUnderTest.SelectEntries(new List<DictionaryEntry>(), new QueryObject(Guid.NewGuid(), 1));
+
+            Assert.AreEqual(0, entries.Count);
         }
 
         private static void AddAnswer(DictionaryEntry entry, bool isCorrect, DateTime answerTime)

@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace ChineseCharacterTrainer.Model
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class QuestionResult : Entity
     {
         public QuestionResult()

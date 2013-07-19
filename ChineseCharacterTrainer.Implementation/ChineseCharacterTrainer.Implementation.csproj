@@ -95,6 +95,7 @@
     <Compile Include="ViewModels\IHighscoreVM.cs" />
     <Compile Include="ViewModels\IMainWindowVM.cs" />
     <Compile Include="ViewModels\IMenuVM.cs" />
+    <Compile Include="ViewModels\IPracticeSummaryVM.cs" />
     <Compile Include="ViewModels\IQuestionVM.cs" />
     <Compile Include="ViewModels\ISummaryVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
@@ -126,6 +127,7 @@
     <None Include="Properties\DataSources\ChineseCharacterTrainer.Model.DictionaryEntry.datasource" />
     <None Include="Properties\DataSources\ChineseCharacterTrainer.Model.Entity.datasource" />
     <None Include="Properties\DataSources\ChineseCharacterTrainer.Model.Highscore.datasource" />
+    <None Include="Properties\DataSources\ChineseCharacterTrainer.Model.QuestionResult.datasource" />
     <None Include="Service References\ServiceReference\ChineseCharacterTrainerService.wsdl" />
     <None Include="Service References\ServiceReference\ChineseCharacterTrainerService.xsd">
       <SubType>Designer</SubType>

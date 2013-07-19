@@ -56,10 +56,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetQuestionResultById">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="questionResultId" type="q8:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetQuestionResultByIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="GetQuestionResultByIdResult" nillable="true" type="q9:QuestionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="AddDictionary">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="dictionary" nillable="true" type="q8:Dictionary" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="dictionary" nillable="true" type="q10:Dictionary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -71,7 +85,7 @@
   <xs:element name="AddDictionaryEntry">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="dictionaryEntry" nillable="true" type="q9:DictionaryEntry" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="dictionaryEntry" nillable="true" type="q11:DictionaryEntry" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -83,7 +97,7 @@
   <xs:element name="AddHighscore">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="highscore" nillable="true" type="q10:Highscore" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="highscore" nillable="true" type="q12:Highscore" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -95,7 +109,7 @@
   <xs:element name="AddQuestionResult">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="questionResult" nillable="true" type="q11:QuestionResult" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="questionResult" nillable="true" type="q13:QuestionResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -107,7 +121,7 @@
   <xs:element name="AddAnswer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="answer" nillable="true" type="q12:Answer" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/ChineseCharacterTrainer.Model" minOccurs="0" name="answer" nillable="true" type="q14:Answer" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

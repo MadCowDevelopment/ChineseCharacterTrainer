@@ -1,4 +1,5 @@
-﻿using ChineseCharacterTrainer.Implementation.ServiceReference;
+﻿using System;
+using ChineseCharacterTrainer.Implementation.ServiceReference;
 using ChineseCharacterTrainer.Implementation.Services;
 using ChineseCharacterTrainer.Model;
 using Moq;
@@ -64,6 +65,19 @@ namespace ChineseCharacterTrainer.UnitTest.Services
         }
 
         [Test]
+        public void ShouldAddQuestionResultAndAnswersWhenAddingQuestionResult()
+        {
+            var questionResult = new QuestionResult();
+            var answer = new Answer(true, DateTime.Now, TimeSpan.FromSeconds(1), null);
+            questionResult.AddAnswer(answer);
+
+            _objectUnderTest.AddQuestionResult(questionResult);
+
+            _serviceMock.Verify(p => p.AddQuestionResult(questionResult));
+            _serviceMock.Verify(p => p.AddAnswer(answer));
+        }
+
+        [Test]
         public void ShouldGetHighscore()
         {
             _serviceMock.Setup(p => p.GetHighscoresForDictionary(_dictionary.Id)).Returns(new List<Highscore>
@@ -83,7 +97,7 @@ namespace ChineseCharacterTrainer.UnitTest.Services
             _serviceMock.Setup(p => p.GetDictionaryEntriesForQueryObject(It.IsAny<QueryObject>())).Returns(
                 new List<DictionaryEntry>(_dictionary.Entries));
 
-            var entries = _objectUnderTest.GetDictionaryEntriesForQueryObject(new QueryObject(1));
+            var entries = _objectUnderTest.GetDictionaryEntriesForQueryObject(new QueryObject(new Guid(), 1));
 
             Assert.AreEqual(_dictionary.Entries, entries);
         }

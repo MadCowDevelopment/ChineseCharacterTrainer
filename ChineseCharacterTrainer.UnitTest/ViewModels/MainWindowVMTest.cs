@@ -40,7 +40,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         }
 
         [Test]
-        public void ShouldSetContentToSummaryViewModelWhenQuestionsAreFinished()
+        public void ShouldSetContentToSummaryViewModelWhenQuestionsAreFinishedAfterCompetition()
         {
             var selectedDictionary = new Dictionary("Test", null);
             _menuVMMock.Raise(p => p.StartCompetitionRequested += null, selectedDictionary);
@@ -48,6 +48,17 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
             _questionVMMock.Raise(p => p.QuestionsFinished += null, new QuestionResult());
 
             Assert.AreEqual(_competitionSummaryVMMock.Object, _objectUnderTest.Content);
+        }
+
+        [Test]
+        public void ShouldSetContentToSummaryViewModelWhenQuestionsAreFinishedAfterPractice()
+        {
+            var dictionaryEntries = new List<DictionaryEntry> { new DictionaryEntry(null, null, null) };
+            _menuVMMock.Raise(p => p.StartPracticeRequested += null, dictionaryEntries);
+
+            _questionVMMock.Raise(p => p.QuestionsFinished += null, new QuestionResult());
+
+            Assert.AreEqual(_practiceSummaryVMMock.Object, _objectUnderTest.Content);
         }
 
         [Test]
@@ -75,11 +86,21 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         }
 
         [Test]
-        public void ShouldStartTrainingWhenDictionaryOpenIsRequested()
+        public void ShouldStartQuestionsWhenCompetitionIsRequested()
         {
             var dictionary = new Dictionary("1", null);
 
             _menuVMMock.Raise(p => p.StartCompetitionRequested += null, dictionary);
+
+            Assert.AreEqual(_questionVMMock.Object, _objectUnderTest.Content);
+        }
+
+        [Test]
+        public void ShouldStartQuestionsWhenPracticeIsRequested()
+        {
+            var dictionaryEntries = new List<DictionaryEntry> {new DictionaryEntry(null, null, null)};
+
+            _menuVMMock.Raise(p => p.StartPracticeRequested += null, dictionaryEntries);
 
             Assert.AreEqual(_questionVMMock.Object, _objectUnderTest.Content);
         }

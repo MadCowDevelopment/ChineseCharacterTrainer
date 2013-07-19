@@ -29,7 +29,7 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             _questionVM.QuestionsFinished += QuestionVMQuestionsFinished;
             _menuVM.StartCompetitionRequested += MenuVMStartCompetitionRequested;
             _menuVM.StartPracticeRequested += MenuVMStartPracticeRequested;
-            _competitionSummaryVM.UploadFinished += SummaryVMUploadFinished;
+            _competitionSummaryVM.UploadFinished += CompetitionSummaryVMUploadFinished;
             _practiceSummaryVM.ReturnToMenuRequested += PracticeSummaryVMReturnToMenuRequested;
             _highscoreVM.ReturnToMenuRequested += HighscoreVMReturnToMenuRequested;
 
@@ -57,7 +57,7 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             Content = _menuVM;
         }
 
-        private void SummaryVMUploadFinished(Highscore highscore)
+        private void CompetitionSummaryVMUploadFinished(Highscore highscore)
         {
             _highscoreVM.Initialize(highscore);
             Content = _highscoreVM;

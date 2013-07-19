@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using ChineseCharacterTrainer.Implementation.Services;
 using ChineseCharacterTrainer.Library;
-using ChineseCharacterTrainer.Model;
 
 namespace ChineseCharacterTrainer.Implementation.ViewModels
 {
@@ -36,12 +35,5 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             var handler = ReturnToMenuRequested;
             if (handler != null) handler();
         }
-    }
-
-    public interface IPracticeSummaryVM : ISummaryVM
-    {
-        ICommand ReturnToMenuCommand { get; }
-        event Action ReturnToMenuRequested;
-        void Initialize(QuestionResult questionResult);
     }
 }

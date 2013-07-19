@@ -10,6 +10,7 @@ namespace ChineseCharacterTrainer.Model
         {
             Username = username;
             QuestionResult = questionResult;
+            QuestionResultId = questionResult.Id;
             DictionaryId = dictionaryId;
         }
 
@@ -22,6 +23,8 @@ namespace ChineseCharacterTrainer.Model
         public Guid DictionaryId { get; private set; }
 
         [DataMember]
-        public virtual QuestionResult QuestionResult { get; private set; }
+        public Guid QuestionResultId { get; private set; }
+
+        public QuestionResult QuestionResult { get; set; }
     }
 }

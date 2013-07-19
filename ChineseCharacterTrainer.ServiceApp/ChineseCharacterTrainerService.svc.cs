@@ -17,7 +17,7 @@ namespace ChineseCharacterTrainer.ServiceApp
             get
             {
                 return _chineseTrainerContext ??
-                       (_chineseTrainerContext = new ChineseTrainerContext());
+                               (_chineseTrainerContext = new ChineseTrainerContext());
             }
 
             set { _chineseTrainerContext = value; }
@@ -28,7 +28,7 @@ namespace ChineseCharacterTrainer.ServiceApp
             get
             {
                 return _entriesSelector ??
-                (_entriesSelector = new SmartEntriesSelector());    
+                (_entriesSelector = new SmartEntriesSelector());
             }
 
             set { _entriesSelector = value; }
@@ -59,9 +59,15 @@ namespace ChineseCharacterTrainer.ServiceApp
 
         public List<DictionaryEntry> GetDictionaryEntriesForQueryObject(QueryObject queryObject)
         {
-            var allEntries = ChineseTrainerContext.GetAll<DictionaryEntry>().ToList();
+            var allEntries = GetDictionaryEntriesForDictionary(queryObject.DictionaryId);
             var selectedEntries = EntriesSelector.SelectEntries(allEntries, queryObject);
             return selectedEntries;
+        }
+
+        public QuestionResult GetQuestionResultById(Guid questionResultId)
+        {
+            var questionResult = ChineseTrainerContext.GetById<QuestionResult>(questionResultId);
+            return questionResult;
         }
 
         public void AddDictionary(Dictionary dictionary)

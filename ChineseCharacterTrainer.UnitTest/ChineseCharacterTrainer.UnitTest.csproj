@@ -74,6 +74,7 @@
     <Compile Include="Converters\BooleanToVisibilityConverterTest.cs" />
     <Compile Include="Converters\IntToAnswerConverterTest.cs" />
     <Compile Include="Converters\PinyinConverterTest.cs" />
+    <Compile Include="Models\EntityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceApp\ChineseCharacterTrainerServiceTest.cs" />
     <Compile Include="ServiceApp\SmartEntriesSelectorTest.cs" />
@@ -88,8 +89,9 @@
     <Compile Include="ViewModels\HighscoreVMTest.cs" />
     <Compile Include="ViewModels\MainWindowVMTest.cs" />
     <Compile Include="ViewModels\MenuVMTest.cs" />
+    <Compile Include="ViewModels\PracticeSummaryVMTest.cs" />
     <Compile Include="ViewModels\QuestionVMTest.cs" />
-    <Compile Include="ViewModels\SummaryVMTest.cs" />
+    <Compile Include="ViewModels\CompetitionSummaryVMTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChineseCharacterTrainer.Implementation\ChineseCharacterTrainer.Implementation.csproj">

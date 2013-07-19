@@ -12,6 +12,8 @@ namespace ChineseCharacterTrainer.IntegrationTest
     {
         private const string TestDatabaseName = "ChineseCharacterTrainerTest";
 
+        private Guid _questionResultId;
+
         [TestFixtureSetUp]
         public void Initialize()
         {
@@ -34,6 +36,12 @@ namespace ChineseCharacterTrainer.IntegrationTest
             var highscore = CreateHighscore(dictionary1);
             testSetupContext.Add(highscore);
 
+            _questionResultId = highscore.QuestionResult.Id;
+            foreach (var answer in highscore.QuestionResult.Answers)
+            {
+                testSetupContext.Add(answer);
+            }
+
             testSetupContext.SaveChanges();
         }
 
@@ -44,7 +52,7 @@ namespace ChineseCharacterTrainer.IntegrationTest
             return new Highscore("Frank", dictionary1.Id, questionResult);
         }
 
-        private static void Guard<T>(ChineseTrainerContext objectUnderTest) where T : class
+        private static void Guard<T>(ChineseTrainerContext objectUnderTest) where T : Entity
         {
             Assert.AreEqual(0, objectUnderTest.GetAll<T>().Count(),
                             string.Format("Guard: Table for type {0} should be empty.", typeof(T)));
@@ -108,6 +116,16 @@ namespace ChineseCharacterTrainer.IntegrationTest
 
             Assert.AreEqual(1, questionResults.Count);
             Assert.AreEqual(1, questionResults[0].Answers.Count);
+        }
+
+        [Test]
+        public void ShouldGetQuestionResultById()
+        {
+            var objectUnderTest = new ChineseTrainerContext(TestDatabaseName);
+
+            var questionResult = objectUnderTest.GetById<QuestionResult>(_questionResultId);
+
+            Assert.IsNotNull(questionResult);
         }
     }
 }

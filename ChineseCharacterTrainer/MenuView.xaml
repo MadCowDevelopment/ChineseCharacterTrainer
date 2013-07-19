@@ -44,18 +44,24 @@
             </Grid>
         </GroupBox>
         
-        <GroupBox Grid.Row="1" Grid.Column="0" Header="Practice">
+        <GroupBox Grid.Row="1" Grid.Column="0" Header="Start">
             <StackPanel>
                 <Button Margin="10" Content="Start practice" Command="{Binding StartPracticeCommand}"/>
+                <Button Margin="10" Content="Start competition" Command="{Binding StartCompetitionCommand}"/>
             </StackPanel>
         </GroupBox>
 
-        <GroupBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Header="Competition">
-            <StackPanel>
-                <ComboBox Margin="10" ItemsSource="{Binding AvailableDictionaries}" 
-                          DisplayMemberPath="Name" SelectedItem="{Binding SelectedDictionary}"/>
-                <Button Margin="10" Content="Start competition" Command="{Binding StartCompetitionCommand}"/>
-            </StackPanel>
+        <GroupBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Header="Dictionaries">
+            <Grid>
+                <ListBox Margin="10" ItemsSource="{Binding AvailableDictionaries}" SelectionMode="Single"
+                         SelectedItem="{Binding SelectedDictionary}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
         </GroupBox>
 
     </Grid>

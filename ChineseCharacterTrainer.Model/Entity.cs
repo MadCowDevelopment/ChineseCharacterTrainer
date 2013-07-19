@@ -7,6 +7,8 @@ namespace ChineseCharacterTrainer.Model
     [KnownType(typeof(Dictionary))]
     [KnownType(typeof(Highscore))]
     [KnownType(typeof(DictionaryEntry))]
+    [KnownType(typeof(QuestionResult))]
+    [KnownType(typeof(Answer))]
     public abstract class Entity// : IEquatable<Entity>
     {
         protected Entity()

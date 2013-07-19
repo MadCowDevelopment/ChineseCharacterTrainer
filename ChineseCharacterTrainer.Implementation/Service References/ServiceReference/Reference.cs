@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace ChineseCharacterTrainer.Implementation.ServiceReference {
     
     
@@ -32,6 +34,9 @@ namespace ChineseCharacterTrainer.Implementation.ServiceReference {
             "jectResponse")]
         System.Collections.Generic.List<ChineseCharacterTrainer.Model.DictionaryEntry> GetDictionaryEntriesForQueryObject(ChineseCharacterTrainer.Model.QueryObject queryObject);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChineseCharacterTrainerService/GetQuestionResultById", ReplyAction="http://tempuri.org/IChineseCharacterTrainerService/GetQuestionResultByIdResponse")]
+        ChineseCharacterTrainer.Model.QuestionResult GetQuestionResultById(System.Guid questionResultId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChineseCharacterTrainerService/AddDictionary", ReplyAction="http://tempuri.org/IChineseCharacterTrainerService/AddDictionaryResponse")]
         void AddDictionary(ChineseCharacterTrainer.Model.Dictionary dictionary);
         
@@ -54,6 +59,7 @@ namespace ChineseCharacterTrainer.Implementation.ServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [ExcludeFromCodeCoverage]
     public partial class ChineseCharacterTrainerServiceClient : System.ServiceModel.ClientBase<ChineseCharacterTrainer.Implementation.ServiceReference.IChineseCharacterTrainerService>, ChineseCharacterTrainer.Implementation.ServiceReference.IChineseCharacterTrainerService {
         
         public ChineseCharacterTrainerServiceClient() {
@@ -89,6 +95,10 @@ namespace ChineseCharacterTrainer.Implementation.ServiceReference {
         
         public System.Collections.Generic.List<ChineseCharacterTrainer.Model.DictionaryEntry> GetDictionaryEntriesForQueryObject(ChineseCharacterTrainer.Model.QueryObject queryObject) {
             return base.Channel.GetDictionaryEntriesForQueryObject(queryObject);
+        }
+        
+        public ChineseCharacterTrainer.Model.QuestionResult GetQuestionResultById(System.Guid questionResultId) {
+            return base.Channel.GetQuestionResultById(questionResultId);
         }
         
         public void AddDictionary(ChineseCharacterTrainer.Model.Dictionary dictionary) {

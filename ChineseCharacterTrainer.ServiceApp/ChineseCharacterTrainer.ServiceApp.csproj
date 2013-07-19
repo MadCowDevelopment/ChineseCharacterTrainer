@@ -84,6 +84,7 @@
     <Compile Include="Persistence\DictionaryMapping.cs" />
     <Compile Include="Persistence\HighscoreMapping.cs" />
     <Compile Include="Persistence\IChineseTrainerContext.cs" />
+    <Compile Include="Persistence\QuestionResultMapping.cs" />
     <Compile Include="Persistence\TranslationMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartEntriesSelector.cs" />

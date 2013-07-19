@@ -7,7 +7,7 @@ using System;
 
 namespace ChineseCharacterTrainer.UnitTest.ViewModels
 {
-    public class SummaryVMTest
+    public class CompetitionSummaryVMTest
     {
         private ICompetitionSummaryVM _objectUnderTest;
 

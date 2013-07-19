@@ -8,7 +8,7 @@ namespace ChineseCharacterTrainer.ServiceApp.Persistence
         public HighscoreMapping()
         {
             HasKey(p => p.Id);
-            HasRequired(p => p.QuestionResult);
+            HasRequired(p => p.QuestionResult).WithMany().HasForeignKey(p => p.QuestionResultId);
         }
     }
 }

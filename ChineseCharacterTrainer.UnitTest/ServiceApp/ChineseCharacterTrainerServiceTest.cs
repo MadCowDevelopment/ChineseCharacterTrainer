@@ -69,7 +69,7 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
         [Test]
         public void ShouldAddHighscoreToContextWhenAdding()
         {
-            var highscore = new Highscore("Frank", Guid.NewGuid(), null);
+            var highscore = new Highscore("Frank", Guid.NewGuid(), new QuestionResult());
 
             _objectUnderTest.AddHighscore(highscore);
 
@@ -79,9 +79,49 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
         [Test]
         public void ShouldSaveChangesWhenAddingHighscore()
         {
-            var highscore = new Highscore("Frank", Guid.NewGuid(), null);
+            var highscore = new Highscore("Frank", Guid.NewGuid(), new QuestionResult());
 
             _objectUnderTest.AddHighscore(highscore);
+
+            _chineseTrainerContextMock.Verify(p => p.SaveChanges());
+        }
+
+        [Test]
+        public void ShouldAddQuestionResultToContextWhenAdding()
+        {
+            var questionResult = new QuestionResult();
+
+            _objectUnderTest.AddQuestionResult(questionResult);
+
+            _chineseTrainerContextMock.Verify(p => p.Add(questionResult));
+        }
+
+        [Test]
+        public void ShouldSaveChangesWhenAddingQuestionResult()
+        {
+            var questionResult = new QuestionResult();
+
+            _objectUnderTest.AddQuestionResult(questionResult);
+
+            _chineseTrainerContextMock.Verify(p => p.SaveChanges());
+        }
+
+        [Test]
+        public void ShouldAddAnswerToContextWhenAdding()
+        {
+            var answer = CreateAnswer();
+
+            _objectUnderTest.AddAnswer(answer);
+
+            _chineseTrainerContextMock.Verify(p => p.Add(answer));
+        }
+
+        [Test]
+        public void ShouldSaveChangesWhenAddingAnswer()
+        {
+            var answer = CreateAnswer();
+
+            _objectUnderTest.AddAnswer(answer);
 
             _chineseTrainerContextMock.Verify(p => p.SaveChanges());
         }
@@ -115,7 +155,7 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
             var dictionary = CreateTestDictionaryWithEntries();
 
             _chineseTrainerContextMock.Setup(p => p.GetAll<Highscore>()).Returns(
-                new List<Highscore> { new Highscore("Frank", dictionary.Id, null)}.AsQueryable);
+                new List<Highscore> { new Highscore("Frank", dictionary.Id, new QuestionResult())}.AsQueryable);
 
             var highscores = _objectUnderTest.GetHighscoresForDictionary(dictionary.Id);
 
@@ -123,12 +163,23 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
         }
 
         [Test]
-        public void ShouldReturnDefaultIfContextIsNotInitialize()
+        public void ShouldReturnDefaultIfContextIsNotInitialized()
         {
             _objectUnderTest = new ChineseCharacterTrainerService();
+
             var context = _objectUnderTest.ChineseTrainerContext;
 
             Assert.IsInstanceOf<ChineseTrainerContext>(context);
+        }
+
+        [Test]
+        public void ShouldReturnDefaultIfEntriesSelectorIsNotInitialized()
+        {
+            _objectUnderTest = new ChineseCharacterTrainerService();
+
+            var selector = _objectUnderTest.EntriesSelector;
+
+            Assert.IsInstanceOf<SmartEntriesSelector>(selector);
         }
 
         [Test]
@@ -138,10 +189,20 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
             _entriesSelectorMock.Setup(p => p.SelectEntries(It.IsAny<List<DictionaryEntry>>(), It.IsAny<QueryObject>()))
                 .Returns(new List<DictionaryEntry> {entry});
 
-            var selectedEntries = _objectUnderTest.GetDictionaryEntriesForQueryObject(new QueryObject(1));
+            var selectedEntries = _objectUnderTest.GetDictionaryEntriesForQueryObject(new QueryObject(new Guid(), 1));
 
             Assert.AreEqual(1, selectedEntries.Count);
             Assert.AreEqual(entry, selectedEntries[0]);
+        }
+
+        [Test]
+        public void ShouldReturnQuestionResultByIdFromContext()
+        {
+            var guid = new Guid();
+            _chineseTrainerContextMock.Setup(p => p.GetById<QuestionResult>(guid)).Returns(new QuestionResult());
+            var questionResult = _objectUnderTest.GetQuestionResultById(guid);
+
+            Assert.IsNotNull(questionResult);
         }
 
         private Dictionary CreateTestDictionaryWithEntries()
@@ -149,6 +210,11 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
             var entries = new List<DictionaryEntry> { new DictionaryEntry("你", "ni3", null) };
             var dictionary = new Dictionary("Test", entries);
             return dictionary;
+        }
+
+        private Answer CreateAnswer()
+        {
+            return new Answer(true, DateTime.Now, TimeSpan.FromSeconds(1), null);
         }
     }
 }

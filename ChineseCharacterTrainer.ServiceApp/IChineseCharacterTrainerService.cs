@@ -23,6 +23,10 @@ namespace ChineseCharacterTrainer.ServiceApp
         [OperationContract]
         [ApplyDataContractResolver]
         List<DictionaryEntry> GetDictionaryEntriesForQueryObject(QueryObject queryObject);
+
+        [OperationContract]
+        [ApplyDataContractResolver]
+        QuestionResult GetQuestionResultById(Guid questionResultId);
             
         [OperationContract]
         void AddDictionary(Dictionary dictionary);

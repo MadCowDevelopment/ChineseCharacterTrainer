@@ -25,11 +25,8 @@ namespace ChineseCharacterTrainer.Implementation.Services
 
         public void AddHighscore(Highscore highscore)
         {
+            AddQuestionResult(highscore.QuestionResult);
             _chineseCharacterTrainerService.AddHighscore(highscore);
-            foreach (var answer in highscore.QuestionResult.Answers)
-            {
-                _chineseCharacterTrainerService.AddAnswer(answer);
-            }
         }
 
         public void AddQuestionResult(QuestionResult questionResult)
@@ -60,6 +57,12 @@ namespace ChineseCharacterTrainer.Implementation.Services
         public List<Highscore> GetAllHighscores(Guid dictionaryId)
         {
             var highscores = _chineseCharacterTrainerService.GetHighscoresForDictionary(dictionaryId);
+            foreach (var highscore in highscores)
+            {
+                highscore.QuestionResult =
+                    _chineseCharacterTrainerService.GetQuestionResultById(highscore.QuestionResultId);
+            }
+
             return highscores;
         }
     }

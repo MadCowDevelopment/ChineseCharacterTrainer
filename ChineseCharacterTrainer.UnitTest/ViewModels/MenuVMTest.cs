@@ -1,4 +1,5 @@
-﻿using ChineseCharacterTrainer.Implementation.Services;
+﻿using System.Threading;
+using ChineseCharacterTrainer.Implementation.Services;
 using ChineseCharacterTrainer.Implementation.ViewModels;
 using ChineseCharacterTrainer.Library;
 using ChineseCharacterTrainer.Model;
@@ -50,7 +51,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
 
             _objectUnderTest.ImportCommand.Execute(null);
 
-            _dictionaryImporterMock.Verify(p => p.ImportAsync(_objectUnderTest.Name, _objectUnderTest.FileName));
+            _dictionaryImporterMock.Verify(p => p.ImportAsync("MyDict", "somefile.csv"));
         }
 
         [Test]
@@ -83,18 +84,34 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
 
             Assert.IsFalse(canExecute);
         }
+        
+        [Test]
+        public void ShouldResetSelectionsWhenImportIsStarted()
+        {
+            _objectUnderTest.Name = "MyDict";
+            _objectUnderTest.FileName = "somefile.csv";
+
+           _objectUnderTest.ImportCommand.Execute(null);
+
+            Assert.AreEqual(string.Empty, _objectUnderTest.Name);
+            Assert.AreEqual(string.Empty, _objectUnderTest.FileName);
+        }
 
         [Test]
         public async void ShouldAddDictionaryToAvailableDictionariesWhenImportingFile()
         {
             _objectUnderTest.Name = "MyDict";
             _objectUnderTest.FileName = "somefile.csv";
-            var task = new Task<Dictionary>(() => new Dictionary("MyDict", null));
+            var task = new Task<Dictionary>(() =>
+                {
+                    Thread.Sleep(10);
+                    return new Dictionary("MyDict", null);
+                });
             _dictionaryImporterMock.Setup(p => p.ImportAsync(_objectUnderTest.Name, _objectUnderTest.FileName))
                                    .Returns(task);
             task.Start();
 
-            await ((RelayCommand) _objectUnderTest.ImportCommand).ExecuteAsync(null);
+            await ((RelayCommand)_objectUnderTest.ImportCommand).ExecuteAsync(null);
 
             Assert.AreEqual(1, _objectUnderTest.AvailableDictionaries.Count);
         }
@@ -132,6 +149,16 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         }
 
         [Test]
+        public void ShouldNotBeAbleToStartPracticeWhenNoDictionaryIsSelected()
+        {
+            _objectUnderTest.SelectedDictionary = null;
+
+            var canOpen = _objectUnderTest.StartPracticeCommand.CanExecute(null);
+
+            Assert.IsFalse(canOpen);
+        }
+
+        [Test]
         public void ShouldRaiseEventWhenCompetitionShouldBeStarted()
         {
             _objectUnderTest.SelectedDictionary = new Dictionary("1", null);
@@ -146,6 +173,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         [Test]
         public void ShouldRaiseEventWhenPracticeShouldBeStarted()
         {
+            _objectUnderTest.SelectedDictionary = new Dictionary("1", null);
             _dictionaryRepositoryMock.Setup(p => p.GetDictionaryEntriesForQueryObject(It.IsAny<QueryObject>()))
                                      .Returns(new List<DictionaryEntry> {new DictionaryEntry(null, null, null)});
             List<DictionaryEntry> dictionaryEntries = null;
@@ -154,6 +182,20 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
             _objectUnderTest.StartPracticeCommand.Execute(null);
 
             Assert.IsNotNull(dictionaryEntries);
+        }
+
+        [Test]
+        public void ShouldNotRaiseEventWhenNoItemsAreFoundForPractice()
+        {
+            _objectUnderTest.SelectedDictionary = new Dictionary("1", null);
+            _dictionaryRepositoryMock.Setup(p => p.GetDictionaryEntriesForQueryObject(It.IsAny<QueryObject>()))
+                                     .Returns(new List<DictionaryEntry>());
+            List<DictionaryEntry> dictionaryEntries = null;
+            _objectUnderTest.StartPracticeRequested += args => dictionaryEntries = args;
+
+            _objectUnderTest.StartPracticeCommand.Execute(null);
+
+            Assert.IsNull(dictionaryEntries);
         }
 
         [Test]

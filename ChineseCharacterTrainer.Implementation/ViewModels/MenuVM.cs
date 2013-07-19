@@ -58,7 +58,11 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
                         new RelayCommand(
                             async p =>
                                 {
-                                    var dictionary = await _dictionaryImporter.ImportAsync(Name, FileName);
+                                    var dictionaryName = Name;
+                                    var fileName = FileName;
+                                    Name = string.Empty;
+                                    FileName = string.Empty;
+                                    var dictionary = await _dictionaryImporter.ImportAsync(dictionaryName, fileName);
                                     AvailableDictionaries.Add(dictionary);
                                 },
                             p => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(FileName)));
@@ -83,11 +87,11 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
                 return _startPracticeCommand ??
                        (_startPracticeCommand = new RelayCommand(p =>
                            {
-                               var queryObject = new QueryObject(10);
+                               var queryObject = new QueryObject(SelectedDictionary.Id, 12);
                                var entries = _repository.GetDictionaryEntriesForQueryObject(queryObject);
                                if (entries.Count == 0) return; // TODO: Show error.
                                RaiseStartPracticeRequested(entries);
-                           }, p => AvailableDictionaries.SelectMany(d => d.Entries).Any()));
+                           }, p => SelectedDictionary != null));
             }
         }
 

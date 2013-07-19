@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace ChineseCharacterTrainer.Model
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class Answer : Entity
     {
         public Answer(bool isCorrect, DateTime answerTime, TimeSpan duration, DictionaryEntry dictionaryEntry)

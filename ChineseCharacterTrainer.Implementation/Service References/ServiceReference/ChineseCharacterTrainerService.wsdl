@@ -31,6 +31,12 @@
   <wsdl:message name="IChineseCharacterTrainerService_GetDictionaryEntriesForQueryObject_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetDictionaryEntriesForQueryObjectResponse" />
   </wsdl:message>
+  <wsdl:message name="IChineseCharacterTrainerService_GetQuestionResultById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetQuestionResultById" />
+  </wsdl:message>
+  <wsdl:message name="IChineseCharacterTrainerService_GetQuestionResultById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetQuestionResultByIdResponse" />
+  </wsdl:message>
   <wsdl:message name="IChineseCharacterTrainerService_AddDictionary_InputMessage">
     <wsdl:part name="parameters" element="tns:AddDictionary" />
   </wsdl:message>
@@ -77,6 +83,10 @@
     <wsdl:operation name="GetDictionaryEntriesForQueryObject">
       <wsdl:input wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/GetDictionaryEntriesForQueryObject" message="tns:IChineseCharacterTrainerService_GetDictionaryEntriesForQueryObject_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/GetDictionaryEntriesForQueryObjectResponse" message="tns:IChineseCharacterTrainerService_GetDictionaryEntriesForQueryObject_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetQuestionResultById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/GetQuestionResultById" message="tns:IChineseCharacterTrainerService_GetQuestionResultById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/GetQuestionResultByIdResponse" message="tns:IChineseCharacterTrainerService_GetQuestionResultById_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddDictionary">
       <wsdl:input wsaw:Action="http://tempuri.org/IChineseCharacterTrainerService/AddDictionary" message="tns:IChineseCharacterTrainerService_AddDictionary_InputMessage" />
@@ -130,6 +140,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetDictionaryEntriesForQueryObject">
       <soap:operation soapAction="http://tempuri.org/IChineseCharacterTrainerService/GetDictionaryEntriesForQueryObject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuestionResultById">
+      <soap:operation soapAction="http://tempuri.org/IChineseCharacterTrainerService/GetQuestionResultById" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
