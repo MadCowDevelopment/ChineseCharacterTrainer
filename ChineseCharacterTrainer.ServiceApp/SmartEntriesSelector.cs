@@ -14,12 +14,12 @@ namespace ChineseCharacterTrainer.ServiceApp
                 return entries;
             }
 
-            var items = CreateQueryItems(entries);
-            CalculateTimeFactor(items);
+            var items = CreateQueryItems(entries, queryObject);
+            CalculateTimeFactor(items, queryObject);
             return SelectMostRelevantEntries(queryObject, items);
         }
 
-        private static List<QueryItem> CreateQueryItems(IEnumerable<DictionaryEntry> entries)
+        private static List<QueryItem> CreateQueryItems(IEnumerable<DictionaryEntry> entries, QueryObject queryObject)
         {
             var items = new List<QueryItem>();
 
@@ -28,13 +28,13 @@ namespace ChineseCharacterTrainer.ServiceApp
                 var item = new QueryItem();
                 item.DictionaryEntry = entry;
                 item.TenMostRecentAnswers = TakeTenMostRecentAnswers(entry);
-                item.Ratio = CalculateRatio(item.TenMostRecentAnswers);
+                item.Ratio = CalculateRatio(item.TenMostRecentAnswers, queryObject);
                 items.Add(item);
             }
             return items;
         }
 
-        private static void CalculateTimeFactor(List<QueryItem> items)
+        private static void CalculateTimeFactor(List<QueryItem> items, QueryObject queryObject)
         {
             var allMostRecentAnswers = items.SelectMany(p => p.TenMostRecentAnswers).ToList();
             if (!allMostRecentAnswers.Any())
@@ -47,6 +47,11 @@ namespace ChineseCharacterTrainer.ServiceApp
             else
             {
                 var oldestAnswerTicks = allMostRecentAnswers.Min(p => p.AnswerTime.Ticks);
+                var ticksFiveDaysAgo = (DateTime.Now - TimeSpan.FromDays(5)).Ticks;
+                if (oldestAnswerTicks > ticksFiveDaysAgo)
+                {
+                    oldestAnswerTicks = ticksFiveDaysAgo;
+                }
 
                 var currentTicks = DateTime.Now.Ticks;
                 foreach (var item in items)
@@ -61,7 +66,8 @@ namespace ChineseCharacterTrainer.ServiceApp
                         item.TimeFactor = CalculateTimeFactor(
                             currentTicks,
                             oldestAnswerTicks,
-                            oldestAnswer.AnswerTime.Ticks);
+                            oldestAnswer.AnswerTime.Ticks,
+                            queryObject.TimeFactor);
                     }
                 }
             }
@@ -76,9 +82,9 @@ namespace ChineseCharacterTrainer.ServiceApp
                 .ToList();
         }
 
-        private static double CalculateTimeFactor(long currentTicks, long oldestAnswerTicks, long mostRecentAnswerTicks)
+        private static double CalculateTimeFactor(
+            long currentTicks, long oldestAnswerTicks, long mostRecentAnswerTicks, double factor)
         {
-            const double factor = 0.5;
             double numerator = currentTicks - mostRecentAnswerTicks;
             double denominator = currentTicks - oldestAnswerTicks;
             return 1 - ((numerator/denominator)*factor);
@@ -86,21 +92,26 @@ namespace ChineseCharacterTrainer.ServiceApp
 
         private static List<Answer> TakeTenMostRecentAnswers(DictionaryEntry dictionaryEntry)
         {
-            return dictionaryEntry.Answers.OrderBy(p => p.AnswerTime).Take(10).ToList();
+            return dictionaryEntry.Answers.OrderByDescending(p => p.AnswerTime).Take(10).ToList();
         }
 
-        private static double CalculateRatio(IReadOnlyList<Answer> answers)
+        private static double CalculateRatio(IReadOnlyList<Answer> answers, QueryObject queryObject)
         {
+            if (answers.Count == 0)
+            {
+                return queryObject.InitialRatio;
+            }
+
             var numerator = 0.0;
             for (var i = 0; i < answers.Count; i++)
             {
                 if (answers[i].IsCorrect)
                 {
-                    numerator += 1/(Math.Pow(2, i));
+                    numerator += Math.Pow(2, answers.Count - i - 1);
                 }
             }
 
-            var denominator = Math.Pow(2, answers.Count);
+            var denominator = Math.Pow(2, answers.Count) - 1;
 
             return numerator/denominator;
         }

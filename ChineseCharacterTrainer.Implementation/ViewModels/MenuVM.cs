@@ -87,7 +87,7 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
                 return _startPracticeCommand ??
                        (_startPracticeCommand = new RelayCommand(p =>
                            {
-                               var queryObject = new QueryObject(SelectedDictionary.Id, 12);
+                               var queryObject = new QueryObject(SelectedDictionary.Id);
                                var entries = _repository.GetDictionaryEntriesForQueryObject(queryObject);
                                if (entries.Count == 0) return; // TODO: Show error.
                                RaiseStartPracticeRequested(entries);
