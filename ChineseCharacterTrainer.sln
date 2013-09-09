@@ -28,6 +28,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CommonAssemblyInfo.cs = CommonAssemblyInfo.cs
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{28F9974D-7D23-4D16-B544-56D22FD9973A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelConverter", "ExcelConverter\ExcelConverter.csproj", "{5C4F3B11-587D-4C0A-A3FD-44730963C4EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,8 +66,15 @@ Global
 		{911EC45A-3FBC-4133-A6C2-D1E0BBA8C37C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{911EC45A-3FBC-4133-A6C2-D1E0BBA8C37C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{911EC45A-3FBC-4133-A6C2-D1E0BBA8C37C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C4F3B11-587D-4C0A-A3FD-44730963C4EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C4F3B11-587D-4C0A-A3FD-44730963C4EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C4F3B11-587D-4C0A-A3FD-44730963C4EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C4F3B11-587D-4C0A-A3FD-44730963C4EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5C4F3B11-587D-4C0A-A3FD-44730963C4EE} = {28F9974D-7D23-4D16-B544-56D22FD9973A}
 	EndGlobalSection
 EndGlobal
