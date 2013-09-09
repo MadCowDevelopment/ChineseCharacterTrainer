@@ -189,7 +189,7 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
             _entriesSelectorMock.Setup(p => p.SelectEntries(It.IsAny<List<DictionaryEntry>>(), It.IsAny<QueryObject>()))
                 .Returns(new List<DictionaryEntry> {entry});
 
-            var selectedEntries = _objectUnderTest.GetDictionaryEntriesForQueryObject(new QueryObject(new Guid(), 1));
+            var selectedEntries = _objectUnderTest.GetDictionaryEntriesForQueryObject(new QueryObject(new Guid()));
 
             Assert.AreEqual(1, selectedEntries.Count);
             Assert.AreEqual(entry, selectedEntries[0]);

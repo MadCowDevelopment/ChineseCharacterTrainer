@@ -97,7 +97,7 @@ namespace ChineseCharacterTrainer.UnitTest.Services
             _serviceMock.Setup(p => p.GetDictionaryEntriesForQueryObject(It.IsAny<QueryObject>())).Returns(
                 new List<DictionaryEntry>(_dictionary.Entries));
 
-            var entries = _objectUnderTest.GetDictionaryEntriesForQueryObject(new QueryObject(new Guid(), 1));
+            var entries = _objectUnderTest.GetDictionaryEntriesForQueryObject(new QueryObject(new Guid()));
 
             Assert.AreEqual(_dictionary.Entries, entries);
         }

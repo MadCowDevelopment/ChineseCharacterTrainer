@@ -17,7 +17,7 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
         [SetUp]
         public void Initialize()
         {
-            _queryObject = new QueryObject(new Guid(), 1);
+            _queryObject = new QueryObject(new Guid()) { NumberOfEntries = 1 };
             _entries = new List<DictionaryEntry>();
             CreateEntries();
 
@@ -45,7 +45,7 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
         [Test]
         public void ShouldSelectEntryWithNoAnswer()
         {
-            AddAnswer(_entry2, false, new DateTime(2010, 1, 2));
+            AddAnswer(_entry2, true, DateTime.Now);
 
             AssertCorrectItemGetsSelected(_entry1);
         }
@@ -59,7 +59,7 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
         [Test]
         public void ShouldReturnEmptyListWhenPassedInEmptyList()
         {
-            var entries = _objectUnderTest.SelectEntries(new List<DictionaryEntry>(), new QueryObject(Guid.NewGuid(), 1));
+            var entries = _objectUnderTest.SelectEntries(new List<DictionaryEntry>(), new QueryObject(Guid.NewGuid()));
 
             Assert.AreEqual(0, entries.Count);
         }
@@ -69,11 +69,11 @@ namespace ChineseCharacterTrainer.UnitTest.ServiceApp
             entry.Answers.Add(new Answer(isCorrect, answerTime, TimeSpan.FromSeconds(1), entry));
         }
 
-        private void AssertCorrectItemGetsSelected(DictionaryEntry entry1)
+        private void AssertCorrectItemGetsSelected(DictionaryEntry entry)
         {
             var selectedEntries = SelectEntries();
             Assert.AreEqual(1, selectedEntries.Count);
-            Assert.AreEqual(entry1, selectedEntries[0]);
+            Assert.AreEqual(entry, selectedEntries[0]);
         }
 
         private List<DictionaryEntry> SelectEntries()
