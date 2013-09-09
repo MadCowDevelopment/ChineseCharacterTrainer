@@ -12,5 +12,6 @@ namespace ChineseCharacterTrainer.Implementation.Services
         List<Dictionary> GetAllDictionaries();
         List<Highscore> GetAllHighscores(Guid dictionaryId);
         List<DictionaryEntry> GetDictionaryEntriesForQueryObject(QueryObject queryObject);
+        List<DictionaryEntry> GetDictionaryEntriesByDictionaryId(Guid id);
     }
 }

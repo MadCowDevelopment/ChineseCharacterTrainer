@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using ChineseCharacterTrainer.Implementation.ViewModels;
+﻿using ChineseCharacterTrainer.Implementation.ViewModels;
 using ChineseCharacterTrainer.Model;
 using Moq;
 using NUnit.Framework;
-using System;
+using System.Collections.Generic;
 
 namespace ChineseCharacterTrainer.UnitTest.ViewModels
 {
@@ -42,8 +41,7 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         [Test]
         public void ShouldSetContentToSummaryViewModelWhenQuestionsAreFinishedAfterCompetition()
         {
-            var selectedDictionary = new Dictionary("Test", null);
-            _menuVMMock.Raise(p => p.StartCompetitionRequested += null, selectedDictionary);
+            RaiseStartCompetitionEvent();
 
             _questionVMMock.Raise(p => p.QuestionsFinished += null, new QuestionResult());
 
@@ -65,32 +63,28 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         public void ShouldInitializeSummaryViewModelWhenQuestionsAreFinished()
         {
             var selectedDictionary = new Dictionary("Test", null);
-            _menuVMMock.Raise(p => p.StartCompetitionRequested += null, selectedDictionary);
+            RaiseStartCompetitionEvent();
             _menuVMMock.Setup(p => p.SelectedDictionary).Returns(selectedDictionary);
             var questionResult = new QuestionResult();
 
             _questionVMMock.Raise(p => p.QuestionsFinished += null, questionResult);
 
-            _competitionSummaryVMMock.Verify(p => p.Initialize(_menuVMMock.Object.SelectedDictionary, questionResult), Times.Once());
+            _competitionSummaryVMMock.Verify(p => p.Initialize(_menuVMMock.Object.SelectedDictionary, questionResult),
+                                             Times.Once());
         }
 
         [Test]
         public void ShouldInitializeQuestionVMWhenDictionaryOpenIsRequested()
         {
-            var entries = new List<DictionaryEntry>();
-            var dictionary = new Dictionary("1", entries);
+            var entries = RaiseStartCompetitionEvent();
 
-            _menuVMMock.Raise(p => p.StartCompetitionRequested += null, dictionary);
-
-            _questionVMMock.Verify(p => p.Initialize(dictionary.Entries));
+            _questionVMMock.Verify(p => p.Initialize(entries));
         }
 
         [Test]
         public void ShouldStartQuestionsWhenCompetitionIsRequested()
         {
-            var dictionary = new Dictionary("1", null);
-
-            _menuVMMock.Raise(p => p.StartCompetitionRequested += null, dictionary);
+            RaiseStartCompetitionEvent();
 
             Assert.AreEqual(_questionVMMock.Object, _objectUnderTest.Content);
         }
@@ -142,6 +136,13 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
             _objectUnderTest.Initialize();
 
             _menuVMMock.Verify(p => p.Initialize());
+        }
+
+        private List<DictionaryEntry> RaiseStartCompetitionEvent()
+        {
+            var entries = new List<DictionaryEntry>();
+            _menuVMMock.Raise(p => p.StartCompetitionRequested += null, entries);
+            return entries;
         }
     }
 }

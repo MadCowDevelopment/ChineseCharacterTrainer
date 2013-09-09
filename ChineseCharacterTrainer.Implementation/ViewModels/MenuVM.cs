@@ -75,7 +75,13 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             {
                 return _startCompetitionCommand ??
                        (_startCompetitionCommand =
-                        new RelayCommand(p => RaiseStartCompetitionRequested(SelectedDictionary),
+                        new RelayCommand(p =>
+                                             {
+                                                 var entries =
+                                                     _repository.GetDictionaryEntriesByDictionaryId(
+                                                         SelectedDictionary.Id);
+                                                 RaiseStartCompetitionRequested(entries);
+                                             },
                                          p => SelectedDictionary != null));
             }
         }
@@ -126,7 +132,7 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
 
         public event Action<List<DictionaryEntry>> StartPracticeRequested;
 
-        public event Action<Dictionary> StartCompetitionRequested;
+        public event Action<List<DictionaryEntry>> StartCompetitionRequested;
 
         public async Task Initialize()
         {
@@ -135,10 +141,10 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             CommandManager.InvalidateRequerySuggested();
         }
 
-        private void RaiseStartCompetitionRequested(Dictionary dictionary)
+        private void RaiseStartCompetitionRequested(List<DictionaryEntry> dictionaryEntries)
         {
             var handler = StartCompetitionRequested;
-            if (handler != null) handler(dictionary);
+            if (handler != null) handler(dictionaryEntries);
         }
 
         protected virtual void RaiseStartPracticeRequested(List<DictionaryEntry> dictionaryEntries)

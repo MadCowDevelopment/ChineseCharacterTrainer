@@ -162,12 +162,16 @@ namespace ChineseCharacterTrainer.UnitTest.ViewModels
         public void ShouldRaiseEventWhenCompetitionShouldBeStarted()
         {
             _objectUnderTest.SelectedDictionary = new Dictionary("1", null);
-            Dictionary dictionaryToOpen = null;
-            _objectUnderTest.StartCompetitionRequested += dictionary => dictionaryToOpen = dictionary;
+            var entries = new List<DictionaryEntry>();
+            _dictionaryRepositoryMock.Setup(
+                p => p.GetDictionaryEntriesByDictionaryId(_objectUnderTest.SelectedDictionary.Id)).Returns(entries);
+            List<DictionaryEntry> dictionaryEntriesToOpen = null;
+            _objectUnderTest.StartCompetitionRequested +=
+                dictionaryEntries => dictionaryEntriesToOpen = dictionaryEntries;
 
             _objectUnderTest.StartCompetitionCommand.Execute(null);
 
-            Assert.AreEqual(_objectUnderTest.SelectedDictionary, dictionaryToOpen);
+            Assert.AreEqual(entries, dictionaryEntriesToOpen);
         }
 
         [Test]

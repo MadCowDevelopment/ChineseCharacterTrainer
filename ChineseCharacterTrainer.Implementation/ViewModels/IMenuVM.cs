@@ -16,7 +16,7 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
         ICommand StartCompetitionCommand { get; }
         ICommand StartPracticeCommand { get; }
         ICommand BrowseCommand { get; }
-        event Action<Dictionary> StartCompetitionRequested;
+        event Action<List<DictionaryEntry>> StartCompetitionRequested;
         event Action<List<DictionaryEntry>> StartPracticeRequested;
         string Name { get; set; }
         string FileName { get; set; }

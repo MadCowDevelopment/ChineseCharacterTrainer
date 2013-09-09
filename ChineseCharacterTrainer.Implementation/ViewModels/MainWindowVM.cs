@@ -63,10 +63,10 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             Content = _highscoreVM;
         }
 
-        private void MenuVMStartCompetitionRequested(Dictionary dictionary)
+        private void MenuVMStartCompetitionRequested(List<DictionaryEntry> dictionaryEntries)
         {
             _trainingMode = TrainingMode.Competition;
-            _questionVM.Initialize(dictionary.Entries);
+            _questionVM.Initialize(dictionaryEntries);
             Content = _questionVM;
         }
 

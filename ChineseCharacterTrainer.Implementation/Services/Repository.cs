@@ -40,18 +40,17 @@ namespace ChineseCharacterTrainer.Implementation.Services
 
         public List<Dictionary> GetAllDictionaries()
         {
-            var dictionaries = _chineseCharacterTrainerService.GetDictionaries();
-            foreach (var dictionary in dictionaries)
-            {
-                dictionary.Entries = _chineseCharacterTrainerService.GetDictionaryEntriesForDictionary(dictionary.Id);
-            }
-
-            return dictionaries;
+            return _chineseCharacterTrainerService.GetDictionaries();
         }
 
         public List<DictionaryEntry> GetDictionaryEntriesForQueryObject(QueryObject queryObject)
         {
             return _chineseCharacterTrainerService.GetDictionaryEntriesForQueryObject(queryObject);
+        }
+
+        public List<DictionaryEntry> GetDictionaryEntriesByDictionaryId(Guid id)
+        {
+            return _chineseCharacterTrainerService.GetDictionaryEntriesForDictionary(id);
         }
 
         public List<Highscore> GetAllHighscores(Guid dictionaryId)
