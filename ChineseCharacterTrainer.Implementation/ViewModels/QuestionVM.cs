@@ -118,7 +118,8 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
 
         private void AnswerCurrentEntry()
         {
-            LastAnswerWasCorrect = RemoveWhitespaces(Answer) == RemoveWhitespaces(CurrentEntry.Pinyin);
+            LastAnswerWasCorrect = RemoveWhitespacesAndToLower(Answer) ==
+                                   RemoveWhitespacesAndToLower(CurrentEntry.Pinyin);
 
             if (LastAnswerWasCorrect)
             {
@@ -138,9 +139,9 @@ namespace ChineseCharacterTrainer.Implementation.ViewModels
             RaisePropertyChanged(() => NumberOfIncorrectAnswers);
         }
 
-        private string RemoveWhitespaces(string value)
+        private string RemoveWhitespacesAndToLower(string value)
         {
-            var result = value.Replace(" ", "");
+            var result = value.Replace(" ", "").ToLower();
             return result;
         }
 

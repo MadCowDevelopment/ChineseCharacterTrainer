@@ -36,6 +36,7 @@ namespace ChineseCharacterTrainer.ServiceApp
 
         public ChineseCharacterTrainerService()
         {
+            //Database.SetInitializer(new DropCreateDatabaseAlways<ChineseTrainerContext>());
             Database.SetInitializer(new DontDropExistingDbCreateTablesIfModelChanged<ChineseTrainerContext>());
         }
 

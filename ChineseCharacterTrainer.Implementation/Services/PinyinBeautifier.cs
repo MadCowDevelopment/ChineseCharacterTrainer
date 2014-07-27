@@ -16,27 +16,27 @@ namespace ChineseCharacterTrainer.Implementation.Services
                     {new Tuple<char, char>('i', '1'), "\u012B"},
                     {new Tuple<char, char>('o', '1'), "\u014D"},
                     {new Tuple<char, char>('u', '1'), "\u016B"},
-                    {new Tuple<char, char>('ü', '1'), "\u01D6"},
+                    {new Tuple<char, char>('v', '1'), "\u01D6"},
                     {new Tuple<char, char>('a', '2'), "\u00E1"},
                     {new Tuple<char, char>('e', '2'), "\u00E9"},
                     {new Tuple<char, char>('i', '2'), "\u00ED"},
                     {new Tuple<char, char>('o', '2'), "\u00F3"},
                     {new Tuple<char, char>('u', '2'), "\u00FA"},
-                    {new Tuple<char, char>('ü', '2'), "\u01D8"},
+                    {new Tuple<char, char>('v', '2'), "\u01D8"},
                     {new Tuple<char, char>('a', '3'), "\u01CE"},
                     {new Tuple<char, char>('e', '3'), "\u011B"},
                     {new Tuple<char, char>('i', '3'), "\u01D0"},
                     {new Tuple<char, char>('o', '3'), "\u01D2"},
                     {new Tuple<char, char>('u', '3'), "\u01D4"},
-                    {new Tuple<char, char>('ü', '3'), "\u01DA"},
+                    {new Tuple<char, char>('v', '3'), "\u01DA"},
                     {new Tuple<char, char>('a', '4'), "\u00E0"},
                     {new Tuple<char, char>('e', '4'), "\u00E8"},
                     {new Tuple<char, char>('i', '4'), "\u00EC"},
                     {new Tuple<char, char>('o', '4'), "\u00F2"},
                     {new Tuple<char, char>('u', '4'), "\u00F9"},
-                    {new Tuple<char, char>('ü', '4'), "\u01DC"},
+                    {new Tuple<char, char>('v', '4'), "\u01DC"},
                 };
-        private static readonly List<char> Vowels = new List<char> { 'a', 'e', 'i', 'o', 'u', 'ü' };
+        private static readonly List<char> Vowels = new List<char> { 'a', 'e', 'i', 'o', 'u', 'v' };
 
         private static readonly char[] Tones = new[] { '1', '2', '3', '4'};
 
