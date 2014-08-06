@@ -41,14 +41,26 @@ namespace ChineseCharacterTrainer.Implementation.Services
 
         private static bool VerifyTranslations(ICollection<string> translations)
         {
-            if (translations.Count == 0) return false;
+            if (translations.Count == 0)
+            {
+                return false;
+            }
+
             return true;
         }
 
         private static bool VerifyCommaSeparatedValues(ICollection<string> commaSeparatedWords)
         {
-            if (commaSeparatedWords.Count != 3) return false;
-            if (commaSeparatedWords.Any(string.IsNullOrWhiteSpace)) return false;
+            if (commaSeparatedWords.Count < 3)
+            {
+                return false;
+            }
+
+            if (commaSeparatedWords.Any(string.IsNullOrWhiteSpace))
+            {
+                return false;
+            }
+
             return true;
         }
     }
