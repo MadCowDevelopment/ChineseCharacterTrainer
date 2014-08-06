@@ -38,7 +38,7 @@ namespace ChineseCharacterTrainer.Implementation.Services
                 };
         private static readonly List<char> Vowels = new List<char> { 'a', 'e', 'i', 'o', 'u', 'v' };
 
-        private static readonly char[] Tones = new[] { '1', '2', '3', '4'};
+        private static readonly char[] Tones = { '1', '2', '3', '4'};
 
         #endregion Fields
 
@@ -143,7 +143,7 @@ namespace ChineseCharacterTrainer.Implementation.Services
             var firstVowel = FindFirstVowel(input);
             if (NumberOfVowels(input) >= 2)
             {
-                if (firstVowel == 'a' || firstVowel == 'e' || firstVowel == 'o')
+                if ((firstVowel == 'a' || firstVowel == 'e' || firstVowel == 'o') && VowelsAreAdjacent(input))
                 {
                     return firstVowel;
                 }
@@ -153,6 +153,22 @@ namespace ChineseCharacterTrainer.Implementation.Services
             }
 
             return firstVowel;
+        }
+
+        private static bool VowelsAreAdjacent(string input)
+        {
+            var previousCharacterWasVowel = false;
+            foreach (var character in input)
+            {
+                if (IsVowel(character))
+                {
+                    if (previousCharacterWasVowel) return true;
+                    previousCharacterWasVowel = true;
+                }
+                else if (character != '\'') previousCharacterWasVowel = false;
+            }
+
+            return false;
         }
 
         private static bool IsVowel(char character)

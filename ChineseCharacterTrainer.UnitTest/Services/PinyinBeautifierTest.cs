@@ -40,6 +40,12 @@ namespace ChineseCharacterTrainer.UnitTest.Services
             AssertConversion(input, expected);
         }
 
+        [Test]
+        public void BugFound()
+        {
+            AssertConversion("zen3meyang4", "zěnmeyàng");
+        }
+
         #region TestCases
         [TestCase("ba4ba", "bàba")]
         [TestCase("xie4xie", "xièxie")]
